@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>記念品のお申し込み｜うちの子の星</title>
+<meta name="description" content="「その日の空」記念証、アートパネル、プレミアムセットのお申し込みフォーム。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="order">
+
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-in">
+    <a class="mark" href="index.html" aria-label="うちの子の星 ホーム">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="16" r="11.2" stroke="#14130F" stroke-width=".9" opacity=".55"/>
+        <path d="M16 6.6v18.8M6.6 16h18.8" stroke="#A8894F" stroke-width=".7" opacity=".45"/>
+        <path d="M16 9.4l1.7 4.9 4.9 1.7-4.9 1.7-1.7 4.9-1.7-4.9-4.9-1.7 4.9-1.7z"
+              fill="#A8894F" opacity=".9"/>
+      </svg>
+      <span class="mark-tx">
+        <span class="jp">うちの子の星</span>
+        <span class="en">KOMOREBI ATELIER</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="index.html#sky">その日の空</a>
+      <a href="map.html">思い出マップ</a>
+      <a href="index.html#keepsakes">記念品</a>
+      <a href="index.html#faq">よくあるご質問</a>
+      <a class="nav-cta" href="memory.html">掲載する（無料）</a>
+    </nav>
+
+    <button class="burger" id="burger" aria-label="メニュー" aria-expanded="false">
+      <i></i><i></i>
+    </button>
+  </div>
+</header>
+
+
+<div class="page-head">
+  <div class="narrow">
+    <span class="lbl center">KEEPSAKE ORDER</span>
+    <h1>記念品のお申し込み</h1>
+    <p>
+      お申し込みをいただいてから、お写真の確認とお見積りのご連絡をいたします。<br>
+      <strong>このフォームでは、まだお支払いは発生しません。</strong>
+    </p>
+  </div>
+</div>
+
+<div class="prose" style="padding-top:34px">
+  <div class="tight">
+
+    <!-- ============ 取引条件の要約 ============ -->
+    <details class="cond" id="condBox">
+      <summary>
+        <span class="cond-t">お申し込みの前に — 料金と約束</span>
+        <span class="cond-s">いちど開いてご確認ください</span>
+      </summary>
+      <div class="cond-b">
+        <table class="cond-tbl">
+          <tr><th>価格</th><td>
+            記念証（PDF）3,300円 ・ ＋A4パネル 8,800円 ・ ＋A3パネルとカード 13,800円<br>
+            木製フレームは ＋4,000円（②③のみ）<span class="cond-note">すべて税込</span>
+          </td></tr>
+          <tr><th>送料</th><td>全国一律 800円<span class="cond-note">③プレミアムセットは送料込</span></td></tr>
+          <tr><th>お支払い</th><td>銀行振込、またはクレジットカード決済<span class="cond-note">振込手数料はご負担をお願いしています</span></td></tr>
+          <tr><th>いつ届くか</th><td>
+            記念証（PDF）：ご入金確認後、おおむね<b>3日以内</b><br>
+            パネル等の印刷物：仕上がり確認後、おおむね<b>2週間以内</b>
+          </td></tr>
+          <tr><th>やめるとき</th><td>
+            <b>制作開始前なら、無料でキャンセルできます。</b>全額をお返しします。<br>
+            制作開始後のご都合による返品はお受けできません。
+          </td></tr>
+          <tr><th>不良・間違い</th><td>
+            破損、汚れ、<b>記載内容の誤り</b>は、到着後7日以内にご連絡ください。無償で作り直します。
+          </td></tr>
+        </table>
+        <p class="cond-fine">
+          くわしい条件は
+          <a href="tokushoho.html" target="_blank">特定商取引法に基づく表記</a>
+          にすべて書いてあります。<br>
+          このフォームを送った時点では、<b>まだお支払いは発生しません。</b>
+          こちらから料金のご案内を差し上げ、それからお決めください。
+        </p>
+      </div>
+    </details>
+
+    <form id="orderForm" class="form-card" novalidate>
+      <div class="form-msg" id="formMsg"></div>
+
+      <!-- ============ 1. 中身を選ぶ ============ -->
+      <div class="field">
+        <label>お選びいただく内容<span class="req">必須</span></label>
+        <div class="hint">あとから変更できます。いま決めなくても大丈夫です。</div>
+        <div class="plan-pick">
+
+          <label class="plan" data-plan="cert">
+            <input type="radio" name="plan" value="cert">
+            <span class="plan-bd">
+              <span class="plan-no">①</span>
+              <span class="plan-ttl">「その日の空」記念証</span>
+              <span class="plan-pr"><b>3,300</b><small>円 税込</small></span>
+              <span class="plan-dsc">
+                その日の空を計算し、そのまま記念証にします。データ（PDF）でお届けします。
+              </span>
+              <span class="plan-sp">送料なし ・ データ納品</span>
+            </span>
+          </label>
+
+          <label class="plan" data-plan="panel">
+            <input type="radio" name="plan" value="panel">
+            <span class="plan-bd">
+              <span class="plan-no">②</span>
+              <span class="plan-rec">いちばん選ばれています</span>
+              <span class="plan-ttl">記念証 ＋ アートパネル A4</span>
+              <span class="plan-pr"><b>8,800</b><small>円 税込 ＋送料800円</small></span>
+              <span class="plan-dsc">
+                記念証と、同じ空を刷ったA4パネル。そのまま置けます。
+              </span>
+              <span class="plan-sp">送料 800円</span>
+            </span>
+          </label>
+
+          <label class="plan" data-plan="set">
+            <input type="radio" name="plan" value="set">
+            <span class="plan-bd">
+              <span class="plan-no">③</span>
+              <span class="plan-ttl">記念証 ＋ A3パネル ＋ カード</span>
+              <span class="plan-pr"><b>13,800</b><small>円 税込 送料込</small></span>
+              <span class="plan-dsc">
+                A3パネルと、持ち歩けるカード2枚を添えた一式です。
+              </span>
+              <span class="plan-sp">送料込</span>
+            </span>
+          </label>
+
+        </div>
+      </div>
+
+      <!-- ============ 2. フレーム ============ -->
+      <div class="field" id="frameField" hidden>
+        <label>フレーム<span class="opt">任意</span></label>
+        <div class="hint">パネルと一緒にお届けします。後からでも追加できます。</div>
+        <div class="radio-group">
+          <label><input type="radio" name="frame" value="no" checked>
+            <span>付けない</span></label>
+          <label><input type="radio" name="frame" value="yes">
+            <span>付ける<span class="rg-sub">＋4,000円</span></span></label>
+        </div>
+      </div>
+
+      <!-- ============ 3. お写真 ============ -->
+      <div class="field">
+        <label>お写真<span class="opt">任意 ・ あとで送っても構いません</span></label>
+        <div class="hint">
+          記念証には入りません。こちらで空や文章を整えるときの参考にします。<br>
+          <b>このページから出ることはありません。</b>ブラウザの中だけで確認します。
+        </div>
+
+        <div class="pd-box">
+          <div class="pd-empty" id="pdEmpty">
+            <button type="button" class="btn small" id="odPick">写真をえらぶ</button>
+            <input type="file" id="odFile" accept="image/*" hidden>
+            <p class="pd-note">JPG / PNG ・ 20MBまで</p>
+          </div>
+          <div class="pd-loading" id="pdLoading" hidden>読み込んでいます…</div>
+          <div class="pd-preview" id="pdPreview" hidden>
+            <img id="pdImg" alt="選んだ写真">
+            <div class="pd-meta">
+              <span id="pdSize"></span>
+              <button type="button" class="pd-del" id="pdDel">取り消す</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-msg" id="odMsg" style="margin-top:14px"></div>
+      </div>
+
+      <div class="field">
+        <label>お名前（あの子の名前）<span class="req">必須</span></label>
+        <input type="text" name="petName" maxlength="40" placeholder="例：むぎ" required>
+      </div>
+
+      <div class="field">
+        <label>記念証に入れる日付<span class="req">必須</span></label>
+        <div class="hint">
+          お迎えした日、いちばん長く散歩した日、見送った日。<br>
+          どの日でも構いません。その日の空を計算します。
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <input type="date" name="skyDate" required>
+          <input type="text" name="skyTime" maxlength="10" placeholder="時刻（例：21:00）">
+        </div>
+        <div class="hint" style="margin-top:9px">
+          時刻が分からない場合は空欄で構いません。その場合は日没後の代表的な時刻で計算し、その旨を記念証に記載します。
+        </div>
+      </div>
+
+      <div class="field">
+        <label>場所<span class="req">必須</span></label>
+        <div class="hint">
+          その土地の空を計算します。<b>市区町村までで結構です。</b>番地は要りません。
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <select name="pref" id="ordPref" required>
+            <option value="">都道府県</option>
+          </select>
+          <input type="text" name="city" maxlength="40" placeholder="市区町村（例：世田谷区）">
+        </div>
+        <input type="hidden" name="place" id="ordPlace">
+      </div>
+
+      <div class="field">
+        <label>短い追悼文について<span class="opt">任意</span></label>
+        <div class="hint">
+          記念証に入れる一文です。ご自身で書いていただいても、こちらでお作りしても構いません。<br>
+          ご希望があれば、お伺いした内容をもとに文章を整えます。
+        </div>
+        <div class="radio-group">
+          <label><input type="radio" name="textMode" value="self" checked> <span>自分で書いた文章を入れたい</span></label>
+          <label><input type="radio" name="textMode" value="ask"> <span>おまかせしたい（こちらからいくつか伺います）</span></label>
+        </div>
+        <textarea name="message" maxlength="600" style="margin-top:14px"
+          placeholder="入れる文章があればこちらに。空欄でも構いません。"></textarea>
+      </div>
+
+      <div class="field">
+        <label>ご連絡先メールアドレス<span class="req">必須</span></label>
+        <input type="email" name="email" maxlength="120" placeholder="you@example.com" required>
+      </div>
+
+      <div class="field">
+        <label>お名前（ご依頼者）<span class="req">必須</span></label>
+        <input type="text" name="customerName" maxlength="60" placeholder="例：山田 花子" required>
+      </div>
+
+      <div id="shipBlock" hidden>
+        <div class="field">
+          <label>お届け先の郵便番号<span class="req">必須</span></label>
+          <input type="text" name="zip" maxlength="10" placeholder="例：154-0000"
+            inputmode="numeric" autocomplete="postal-code">
+        </div>
+
+        <div class="field">
+          <label>お届け先のご住所<span class="req">必須</span></label>
+          <textarea name="address" maxlength="200" style="min-height:80px"
+            placeholder="都道府県・市区町村・番地・建物名" autocomplete="street-address"></textarea>
+        </div>
+      </div>
+
+      <div class="field hp" aria-hidden="true">
+        <label>この欄は入力しないでください</label>
+        <input type="text" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="field check">
+        <label>
+          <input type="checkbox" name="agreeKeepsake" required>
+          <span>
+            「その日の空」記念証が<strong>記念品</strong>であり、星の命名権・天体や土地の所有権・いかなる法的効力も伴わないことに同意します。
+          </span>
+        </label>
+      </div>
+
+      <div class="field check">
+        <label>
+          <input type="checkbox" name="agreeTerms" required>
+          <span>
+            <a href="terms.html" target="_blank" style="text-decoration:underline;color:var(--green)">利用規約</a>および
+            <a href="tokushoho.html" target="_blank" style="text-decoration:underline;color:var(--green)">特定商取引法に基づく表記</a>に同意します。
+          </span>
+        </label>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="btn" id="submitBtn">この内容で申し込む</button>
+        <p class="form-note">
+          送信後、お写真のご依頼方法とお支払いのご案内をメールでお送りします。<br>
+          制作前に、仕上がりのイメージをご確認いただきます。
+        </p>
+      </div>
+    </form>
+
+    <!-- ============ よくあるご質問 ============ -->
+    <section class="ord-faq">
+      <span class="lbl center">QUESTIONS</span>
+      <h2 class="h3c">よくいただくご質問</h2>
+
+      <div class="faq">
+        <details>
+          <summary><span class="q">一</span><span>写真が古くて、少しボケています。使えますか。</span></summary>
+          <div class="a">
+            <p>使えることがほとんどです。記念証にはお写真を載せませんので、写りの悪さが仕上がりに影響することはありません。</p>
+            <p>パネルやカードに仕立てる場合のみ、あとから「この写真では厳しい」とご相談することがあります。そのときは別のお写真をお願いするか、ご希望であればキャンセルもできます。</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="q">二</span><span>日付がはっきり覚えていません。</span></summary>
+          <div class="a">
+            <p>「たぶんこの季節」くらいで構いません。そのうえで、いちばん近い日を一緒に決めましょう。</p>
+            <p>正確な日付が分からない場合も、記念証には「推定」であることを明記せず、ご指定いただいた日付で計算した値をそのまま記載します。日付だけを変えて作り直すこともできます。</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="q">三</span><span>その日、晴れていたか分かりません。曇りでも意味はありますか。</span></summary>
+          <div class="a">
+            <p>あります。記念証に書いているのは「実際に見えた空」ではなく、<b>その時刻に、その場所の上空にあった天体の位置</b>です。雲の上には、たしかにありました。</p>
+            <p>ただし天候や光害、建物の影までは計算していません。その点は記念証にも明記しています。</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="q">四</span><span>犬や猫以外でも、お願いできますか。</span></summary>
+          <div class="a">
+            <p>はい。うさぎ、鳥、ハムスター、そして人（ご家族）についてもお作りしています。備考欄にその旨をお書きください。</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="q">五</span><span>何度も作れますか。同じ子で2枚目です。</span></summary>
+          <div class="a">
+            <p>はい。日付を変えて、何枚でもお作りします。2枚目以降も同一料金です。</p>
+            <p>「お迎えした日」と「見送った日」の2枚を並べて飾られる方がいちばん多いです。</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="q">六</span><span>申し込んだあと、やっぱりやめられますか。</span></summary>
+          <div class="a">
+            <p>制作を始める前なら、無料でやめられます。お申し込みを送った時点では、まだお支払いは発生していません。</p>
+            <p>料金のご案内メールが届いたあと、そこで「やめます」と一言いただければそれで終わりです。しつこくご連絡することはありません。</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="q">七</span><span>これは、星に名前をつけるサービスですか。</span></summary>
+          <div class="a">
+            <p>ちがいます。これは<b>記念品</b>です。星の命名権、国際天文学連合（IAU）が定める正式名称、天体や土地の所有権、いかなる法的効力も伴いません。</p>
+            <p>そのかわり、書いてある数字はすべて計算した実測値です。「イメージ」ではありません。誰が計算しても同じ値になります。</p>
+          </div>
+        </details>
+      </div>
+
+      <p class="ord-faq-more">
+        ほかにもご不安があれば、<a href="index.html#faq">よくあるご質問</a>をご覧ください。<br>
+        それでも足りないときは、お申し込み前でもお気軽にご連絡ください。
+      </p>
+    </section>
+
+    <div class="notice" style="margin-top:34px">
+      <strong>お支払いについて</strong>
+      お申し込み後に、銀行振込またはクレジットカード決済のいずれかをお選びいただけます。
+      制作開始前であれば、キャンセルは無料です。
+    </div>
+
+  </div>
+</div>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <div>
+        <div class="ftr-mark">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <circle cx="16" cy="16" r="11.2" stroke="#CFC9BE" stroke-width=".8" opacity=".5"/>
+            <path d="M16 9.4l1.7 4.9 4.9 1.7-4.9 1.7-1.7 4.9-1.7-4.9-4.9-1.7 4.9-1.7z"
+                  fill="#E8D9B4" opacity=".85"/>
+          </svg>
+          <span>
+            <span class="jp">うちの子の星</span>
+            <span class="en">KOMOREBI ATELIER</span>
+          </span>
+        </div>
+        <p>犬と猫のための、思い出の記録と記念品の制作。<br>火葬・埋葬・供養・納骨は行っておりません。</p>
+      </div>
+
+      <div class="ftr-ln">
+        <h4>CONTENTS</h4>
+        <a href="index.html#sky">その日の空</a>
+        <a href="map.html">思い出マップ</a>
+        <a href="index.html#keepsakes">記念品</a>
+        <a href="index.html#faq">よくあるご質問</a>
+        <a href="memory.html">掲載する（無料）</a>
+      </div>
+
+      <div class="ftr-ln">
+        <h4>INFORMATION</h4>
+        <a href="tokushoho.html">特定商取引法に基づく表記</a>
+        <a href="privacy.html">プライバシーポリシー</a>
+        <a href="terms.html">利用規約</a>
+        <a href="ai-policy.html">AI利用に関する方針</a>
+      </div>
+    </div>
+
+    <div class="ftr-disc">
+      <div>
+        <b>「その日の空」記念証について</b>
+        当該記念証は記念品です。星の命名権、国際天文学連合（IAU）が定める正式名称、
+        宇宙・天体・土地の所有権、その他いかなる法的効力も伴いません。
+      </div>
+      <div>
+        <b>思い出マップについて</b>
+        想い出を記録するためのものであり、墓地・納骨堂・霊園ではありません。
+        区画の販売および永続的な保管を約束するものではありません。
+      </div>
+      <div class="ftr-cr">&copy; <span data-year>2026</span> KOMOREBI ATELIER</div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="config.js"></script>
+<script src="mapdata.js"></script>
+<script src="photo.js"></script>
+<script src="form.js"></script>
+<script src="main.js"></script>
+<script>
+(function(){
+  var form = document.getElementById('orderForm');
+  var msg  = document.getElementById('formMsg');
+  var btn  = document.getElementById('submitBtn');
+
+  var PLANS = {
+    cert:  { label: '「その日の空」記念証', price: 3300,  ship: 0 },
+    panel: { label: '記念証 ＋ アートパネル A4', price: 8800,  ship: 800 },
+    set:   { label: '記念証 ＋ A3パネル ＋ カード', price: 13800, ship: 0 }
+  };
+  var FRAME = 4000;
+
+  /* ---------- 都道府県を埋める ---------- */
+  var prefSel = document.getElementById('ordPref');
+  (window.PREFECTURES || []).forEach(function (p) {
+    var o = document.createElement('option');
+    o.value = p.name; o.textContent = p.name;
+    prefSel.appendChild(o);
+  });
+
+  /* ---------- プラン選択で出し分け ---------- */
+  var frameField = document.getElementById('frameField');
+  var shipBlock  = document.getElementById('shipBlock');
+  var ordPlace   = document.getElementById('ordPlace');
+
+  function syncPlan(){
+    var p = form.querySelector('input[name=plan]:checked');
+    form.querySelectorAll('.plan').forEach(function (el) {
+      el.classList.toggle('on', !!p && el.dataset.plan === p.value);
+    });
+    var needsShip = !!p && p.value !== 'cert';
+    frameField.hidden = !p || p.value === 'cert';
+    shipBlock.hidden  = !needsShip;
+    ordPlace.value =
+      (prefSel.value || '') + (form.city.value ? ' ' + form.city.value : '');
+  }
+  form.querySelectorAll('input[name=plan]').forEach(function (i) {
+    i.addEventListener('change', function () { syncPlan(); calc(); });
+  });
+  prefSel.addEventListener('change', syncPlan);
+  form.city.addEventListener('input', syncPlan);
+
+  /* ?plan= で飛んできたとき */
+  var q = new URLSearchParams(location.search).get('plan');
+  if (q) {
+    var r = form.querySelector('input[name=plan][value="' + q + '"]');
+    if (r) r.checked = true;
+  }
+
+  var out = document.createElement('div');
+  out.className = 'total-line';
+  form.querySelector('.submit-row').before(out);
+
+  function calc(){
+    var p = form.querySelector('input[name=plan]:checked');
+    if (!p) { out.innerHTML = ''; return; }
+    var plan = PLANS[p.value];
+    var frame = form.querySelector('input[name=frame]:checked').value === 'yes' ? FRAME : 0;
+    var sum = plan.price + frame + plan.ship;
+    out.innerHTML =
+      '<span class="tl-l">お支払い予定額（目安）</span>' +
+      '<span class="tl-v">' + sum.toLocaleString() + '<small>円（税込）</small></span>' +
+      '<span class="tl-n">' + plan.label +
+      (frame ? ' ＋ フレーム' : '') +
+      (plan.ship ? ' ＋ 送料' + plan.ship + '円' : ' ＋ 送料込') + '</span>';
+  }
+  form.querySelectorAll('input[name=frame]').forEach(function(i){
+    i.addEventListener('change', calc);
+  });
+  syncPlan();
+  calc();
+
+  /* ---------- 写真（この端末から出ません） ---------- */
+  var odFile = document.getElementById('odFile');
+  var odPick = document.getElementById('odPick');
+  var pdEmpty = document.getElementById('pdEmpty');
+  var pdLoading = document.getElementById('pdLoading');
+  var pdPreview = document.getElementById('pdPreview');
+  var pdImg = document.getElementById('pdImg');
+  var pdSize = document.getElementById('pdSize');
+  var pdDel = document.getElementById('pdDel');
+  var odMsg = document.getElementById('odMsg');
+  var state = { fp: null };
+
+  function odErr(t){
+    odMsg.className = 'form-msg err';
+    odMsg.textContent = t;
+  }
+  function odClear(){ odMsg.className = 'form-msg'; odMsg.textContent = ''; }
+
+  odPick.addEventListener('click', function(){ odFile.click(); });
+  odFile.addEventListener('change', async function(){
+    var f = odFile.files && odFile.files[0];
+    if (!f) return;
+    odClear();
+    pdEmpty.hidden = true; pdLoading.hidden = false; pdPreview.hidden = true;
+    try{
+      var fp = await window.PHOTO.analyze(f);
+      state.fp = fp;
+      pdImg.src = fp.dataUrl;
+      pdSize.textContent = Math.round(fp.size/1024) + ' KB ・ ' + fp.width + '×' + fp.height;
+      pdLoading.hidden = true; pdPreview.hidden = false;
+    }catch(e){
+      state.fp = null;
+      pdLoading.hidden = true; pdEmpty.hidden = false;
+      odErr(e.message || '写真を読み込めませんでした。');
+    }
+    odFile.value = '';
+  });
+  pdDel.addEventListener('click', function(){
+    state.fp = null; pdImg.removeAttribute('src');
+    pdPreview.hidden = true; pdEmpty.hidden = false; odClear();
+  });
+
+  function err(t){
+    msg.className = 'form-msg err';
+    msg.textContent = t;
+    msg.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (form.website && form.website.value) return;
+
+    var plan = form.querySelector('input[name=plan]:checked');
+    if (!plan) return err('お選びいただく内容を選択してください。');
+
+    var petName = form.petName.value.trim();
+    var email   = form.email.value.trim();
+    var customerName = form.customerName.value.trim();
+    var skyDate = form.skyDate.value;
+    var place   = form.pref.value;
+
+    if (!petName) return err('お名前を入力してください。');
+    if (!skyDate) return err('記念証に入れる日付を選択してください。');
+    if (!place)   return err('都道府県を選択してください。');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      return err('メールアドレスの形式をご確認ください。');
+    if (!customerName) return err('ご依頼者のお名前を入力してください。');
+
+    var needsShip = plan.value !== 'cert';
+    if (needsShip && !form.zip.value.trim())
+      return err('お届け先の郵便番号を入力してください。');
+    if (needsShip && !form.address.value.trim())
+      return err('お届け先のご住所を入力してください。');
+    if (!form.agreeKeepsake.checked) return err('記念品の内容へのご同意をお願いします。');
+    if (!form.agreeTerms.checked)    return err('利用規約へのご同意をお願いします。');
+
+    var frameOn = form.querySelector('input[name=frame]:checked').value === 'yes';
+
+    window.sendForm({
+      type: 'keepsake_order',
+      subject: '【記念品】' + petName + ' さま / ' + PLANS[plan.value].label,
+      plan: PLANS[plan.value].label,
+      frame: frameOn ? 'あり（+4,000円）' : 'なし',
+      petName: petName,
+      skyDate: skyDate,
+      skyTime: form.skyTime.value.trim() || '指定なし（日没後で算出）',
+      place: place + (form.city.value.trim() ? ' ' + form.city.value.trim() : ''),
+      photo: state.fp ? ('あり（' + state.fp.name + ' / ' + state.fp.width + '×' + state.fp.height + '）') : 'なし（後日送付）',
+      photoSha256: state.fp ? state.fp.sha256 : '',
+      textMode: form.querySelector('input[name=textMode]:checked').value === 'ask'
+        ? 'おまかせ' : '本人記入',
+      message: form.message.value.trim(),
+      email: email,
+      customerName: customerName,
+      zip: form.zip.value.trim(),
+      address: form.address.value.trim(),
+      website: form.website.value,
+      url: location.href
+    }, msg, btn,
+      'お申し込みを受け付けました。<br>' +
+      '<span style="font-size:11px;opacity:.8">お写真のご依頼方法とお支払いのご案内をお送りします。' +
+      'この時点では、まだお支払いは発生していません。</span>'
+    ).then(function(ok){
+      if (ok){
+        form.reset();
+        state.fp = null;
+        pdPreview.hidden = true; pdEmpty.hidden = false;
+        syncPlan(); calc();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

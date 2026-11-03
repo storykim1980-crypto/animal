@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>思い出マップ｜うちの子の星</title>
+<meta name="description" content="全国47都道府県の、亡くなった犬・猫の思い出マップ。掲載は無料です。お墓・霊園ではありません。">
+<meta name="theme-color" content="#F7F3EC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ---------- map page only ---------- */
+  .map-page{background:var(--night);color:#CFC9BE;padding:150px 0 110px;position:relative;overflow:hidden}
+  .map-page::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse 60% 50% at 82% 8%,rgba(96,120,158,.15),transparent 70%),
+      radial-gradient(ellipse 44% 40% at 10% 88%,rgba(168,137,79,.10),transparent 72%)}
+  .map-page .h2,.map-page h1{color:#F2EDE4}
+  .map-page p{color:#A9A499}
+  .map-page .lbl{color:var(--star)}
+  .map-page .lbl::before{background:var(--star);opacity:.45}
+
+  .filter{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:46px 0 60px}
+  .filter button{
+    border:1px solid var(--line-n);padding:11px 26px;border-radius:100px;
+    font-size:11px;letter-spacing:.18em;color:#9A958B;transition:.4s var(--ease);
+  }
+  .filter button:hover{border-color:var(--star);color:var(--star)}
+  .filter button.on{background:var(--star);border-color:var(--star);color:var(--night)}
+
+  .region-blk{margin-bottom:56px;opacity:1;transition:opacity .5s var(--ease)}
+  .region-blk.hide{display:none}
+  .region-h{display:flex;align-items:baseline;gap:20px;padding-bottom:16px;margin-bottom:22px;
+    border-bottom:1px solid var(--line-n)}
+  .region-h h2{font-family:var(--mincho);font-size:17px;font-weight:400;letter-spacing:.16em;
+    color:#F2EDE4}
+  .region-h .en{font-size:8.5px;letter-spacing:.3em;color:var(--star);opacity:.55}
+  .region-h .sum{margin-left:auto;font-family:var(--mincho);font-size:12px;color:var(--star);
+    letter-spacing:.1em}
+
+  .prefs{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;
+    background:var(--line-n);border:1px solid var(--line-n)}
+  .pref{
+    background:#12161C;padding:20px 18px;text-align:left;position:relative;
+    transition:background .45s var(--ease);cursor:pointer;
+  }
+  .pref:hover{background:#1A2029}
+  .pref .nm{font-family:var(--mincho);font-size:13px;letter-spacing:.1em;color:#E4DED2;
+    display:flex;align-items:center;gap:8px}
+  .pref .nm i{width:4px;height:4px;border-radius:50%;background:#3C424B;flex:none;
+    transition:.4s var(--ease)}
+  .pref.lit .nm i{background:var(--star);box-shadow:0 0 8px rgba(232,217,180,.75)}
+  .pref .ct{margin-top:8px;font-size:10px;letter-spacing:.14em;color:#6E6A62}
+  .pref.lit .ct b{font-family:var(--mincho);color:var(--star);font-size:12px;font-weight:400}
+  .pref.zero{opacity:.55}
+  .pref:hover.zero{opacity:.85}
+
+  /* drawer */
+  .drw{position:fixed;inset:0;z-index:300;display:none}
+  .drw.on{display:block}
+  .drw-bg{position:absolute;inset:0;background:rgba(6,8,11,.72);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+  .drw-panel{
+    position:absolute;top:0;right:0;bottom:0;width:min(520px,100%);
+    background:var(--paper);color:var(--ink-2);padding:56px 44px;
+    overflow-y:auto;box-shadow:-30px 0 90px rgba(0,0,0,.4);
+    transform:translateX(100%);transition:transform .55s var(--ease-out);
+  }
+  .drw.on .drw-panel{transform:none}
+  .drw-x{position:absolute;top:20px;right:22px;width:40px;height:40px;
+    display:grid;place-items:center;font-size:20px;color:var(--ink-3);transition:.3s}
+  .drw-x:hover{color:var(--gold)}
+  .drw-h .lbl{color:var(--gold);margin-bottom:16px}
+  .drw-h h3{font-family:var(--mincho);font-size:26px;font-weight:400;letter-spacing:.14em;
+    color:var(--ink);line-height:1.5}
+  .drw-h .sub{font-size:11px;letter-spacing:.14em;color:var(--gold);margin-top:12px}
+  .drw-body{margin-top:34px}
+  .ent{border-top:1px solid var(--line);padding:22px 0;display:flex;gap:16px}
+  .ent .dot{width:38px;height:38px;flex:none;border-radius:50%;
+    background:radial-gradient(circle at 40% 34%,#FBF6EA,#E2D5BC);display:grid;place-items:center}
+  .ent .dot svg{width:16px;height:16px;opacity:.5}
+  .ent .nm{font-family:var(--mincho);font-size:14px;letter-spacing:.1em;color:var(--ink)}
+  .ent .yr{font-size:9.5px;letter-spacing:.2em;color:var(--gold);margin-top:4px}
+  .ent .ms{font-family:var(--mincho);font-size:12px;line-height:2.1;letter-spacing:.04em;
+    color:var(--ink-3);margin-top:10px}
+  .drw-empty{text-align:center;padding:44px 0 12px}
+  .drw-empty p{font-family:var(--mincho);font-size:13.5px;line-height:2.3;letter-spacing:.06em;
+    color:var(--ink-3)}
+  .drw-cta{margin-top:34px}
+  .drw-cta .btn{width:100%}
+  .drw-note{font-size:10px;color:var(--ink-3);text-align:center;margin-top:14px;letter-spacing:.05em}
+
+  @media(max-width:860px){
+    .map-page{padding:110px 0 80px}
+    .drw-panel{padding:48px 26px}
+  }
+</style>
+</head>
+<body data-page="map">
+
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-in">
+    <a class="mark" href="index.html" aria-label="うちの子の星 ホーム">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="16" r="11.2" stroke="#14130F" stroke-width=".9" opacity=".55"/>
+        <path d="M16 6.6v18.8M6.6 16h18.8" stroke="#A8894F" stroke-width=".7" opacity=".45"/>
+        <path d="M16 9.4l1.7 4.9 4.9 1.7-4.9 1.7-1.7 4.9-1.7-4.9-4.9-1.7 4.9-1.7z"
+              fill="#A8894F" opacity=".9"/>
+      </svg>
+      <span class="mark-tx">
+        <span class="jp">うちの子の星</span>
+        <span class="en">KOMOREBI ATELIER</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="index.html#sky">その日の空</a>
+      <a href="map.html">思い出マップ</a>
+      <a href="index.html#keepsakes">記念品</a>
+      <a href="index.html#faq">よくあるご質問</a>
+      <a class="nav-cta" href="memory.html">掲載する（無料）</a>
+    </nav>
+
+    <button class="burger" id="burger" aria-label="メニュー" aria-expanded="false">
+      <i></i><i></i>
+    </button>
+  </div>
+</header>
+
+<!-- ================= HEAD ================= -->
+<section class="map-page">
+  <div class="wrap">
+    <div class="sec-head center" style="margin-bottom:0" data-rv>
+      <span class="lbl center">MEMORY MAP</span>
+      <h1 class="h2" style="margin:28px 0 0">
+        47都道府県の<br>
+        どこかに、<br>
+        その子の星があります。
+      </h1>
+      <p class="lead" style="margin-top:26px">
+        お住まいの都道府県を選ぶと、そこに残された想いを見ることができます。<br>
+        同じ地域で、同じように誰かを見送った人がいる。<br>
+        それだけで、少し楽になることがあります。
+      </p>
+    </div>
+
+    <div class="filter" data-rv="2">
+      <button class="on" data-f="all">すべて</button>
+      <button data-f="lit">想いのある地域</button>
+      <button data-f="zero">まだ 0 の地域</button>
+    </div>
+
+    <div id="regions"></div>
+
+    <div class="notice dark" style="margin-top:70px" data-rv>
+      <strong>この地図について、はっきりとお伝えします。</strong>
+      この「思い出マップ」は、<b>想い出を記録するための地図</b>です。
+      <b>お墓・納骨堂・霊園ではなく、区画を販売するものでもありません。</b>
+      地図上の印は、法的な権利や場所の所有を示すものではありません。
+      <ul>
+        <li>区画・墓所の販売、および永続的な保管を約束するものではありません。</li>
+        <li>掲載は無料です。削除もいつでも無料です。</li>
+        <li>表示されるのは、掲載に同意いただいた方のみです。市区町村や住所は表示しません。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta">
+  <div class="wrap cta-in">
+    <span class="lbl center on-dark" data-rv>START HERE</span>
+    <h2 style="margin-top:30px" data-rv>あなたの街にも、<br>きっと誰かがいます。</h2>
+    <p data-rv="2">掲載は無料です。アカウント登録も、クレジットカードも必要ありません。</p>
+    <a class="btn" href="memory.html" data-rv="3">思い出ページをつくる</a>
+  </div>
+</section>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <div>
+        <div class="ftr-mark">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <circle cx="16" cy="16" r="11.2" stroke="#CFC9BE" stroke-width=".8" opacity=".5"/>
+            <path d="M16 9.4l1.7 4.9 4.9 1.7-4.9 1.7-1.7 4.9-1.7-4.9-4.9-1.7 4.9-1.7z"
+                  fill="#E8D9B4" opacity=".85"/>
+          </svg>
+          <span>
+            <span class="jp">うちの子の星</span>
+            <span class="en">KOMOREBI ATELIER</span>
+          </span>
+        </div>
+        <p>犬と猫のための、思い出の記録と記念品の制作。<br>火葬・埋葬・供養・納骨は行っておりません。</p>
+      </div>
+      <div class="ftr-ln">
+        <h4>CONTENTS</h4>
+        <a href="index.html#sky">その日の空</a>
+        <a href="map.html">思い出マップ</a>
+        <a href="index.html#keepsakes">記念品</a>
+        <a href="index.html#faq">よくあるご質問</a>
+        <a href="memory.html">掲載する（無料）</a>
+      </div>
+      <div class="ftr-ln">
+        <h4>INFORMATION</h4>
+        <a href="tokushoho.html">特定商取引法に基づく表記</a>
+        <a href="privacy.html">プライバシーポリシー</a>
+        <a href="terms.html">利用規約</a>
+        <a href="ai-policy.html">AI利用に関する方針</a>
+      </div>
+    </div>
+    <div class="ftr-disc">
+      <div>
+        <b>「その日の空」記念証について</b>
+        当該記念証は記念品です。星の命名権、国際天文学連合（IAU）が定める正式名称、
+        宇宙・天体・土地の所有権、その他いかなる法的効力も伴いません。
+      </div>
+      <div>
+        <b>思い出マップについて</b>
+        想い出を記録するためのものであり、墓地・納骨堂・霊園ではありません。
+        区画の販売および永続的な保管を約束するものではありません。
+      </div>
+      <div class="ftr-cr">&copy; <span data-year>2026</span> KOMOREBI ATELIER</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= DRAWER ================= -->
+<div class="drw" id="drw" role="dialog" aria-modal="true">
+  <div class="drw-bg" data-close></div>
+  <div class="drw-panel">
+    <button class="drw-x" data-close aria-label="閉じる">&times;</button>
+    <div class="drw-h">
+      <span class="lbl">PREFECTURE</span>
+      <h3 id="drwName"></h3>
+      <div class="sub" id="drwSub"></div>
+    </div>
+    <div class="drw-body" id="drwBody"></div>
+  </div>
+</div>
+
+<script src="entries.js"></script>
+<script src="mapdata.js"></script>
+<script src="geomap.js"></script>
+<script src="config.js"></script>
+<script src="main.js"></script>
+<script>
+(function(){
+  'use strict';
+  var P = window.PREFECTURES || [];
+  var REG = window.REGIONS || [];
+  var counts = {};
+  (function seed(){
+    var src = window.ENTRIES || {};
+    Object.keys(src).forEach(function (k) { counts[k] = src[k].length; });
+  })();
+
+  /* 実データ（tools/build_memorial.py が entries.js を書き出します）
+     public のページだけが入っています。空なら地図は「まだ0」表示のまま。 */
+  var SAMPLE = window.ENTRIES || {};
+  if (!window.ENTRIES) {
+    var sc = document.createElement('script');
+    sc.src = 'entries.js';
+    sc.onload = function () {
+      SAMPLE = window.ENTRIES || {};
+      Object.keys(SAMPLE).forEach(function (k) { counts[k] = SAMPLE[k].length; });
+      render();
+    };
+    document.head.appendChild(sc);
+  }
+
+  var host = document.getElementById('regions');
+
+  function render(){
+    host.innerHTML = REG.map(function(r){
+      var list = P.filter(function(p){ return p.region === r.key; });
+      var sum = list.reduce(function(a,p){ return a + (counts[p.name]||0); }, 0);
+      return '<div class="region-blk" data-sum="' + sum + '">' +
+        '<div class="region-h">' +
+          '<h2>' + r.name + '</h2>' +
+          '<span class="en">' + r.en + '</span>' +
+          '<span class="sum">' + (sum > 0 ? sum + ' の想い' : '—') + '</span>' +
+        '</div>' +
+        '<div class="prefs">' +
+        list.map(function(p){
+          var c = counts[p.name] || 0;
+          return '<button class="pref' + (c>0?' lit':' zero') + '" data-pref="' + p.name + '">' +
+            '<span class="nm"><i></i>' + p.name + '</span>' +
+            '<span class="ct">' + (c>0 ? '<b>'+c+'</b> の想い' : 'まだ 0') + '</span>' +
+          '</button>';
+        }).join('') +
+        '</div></div>';
+    }).join('');
+
+    host.querySelectorAll('.pref').forEach(function(b){
+      b.addEventListener('click', function(){
+        openDrawer(b.dataset.pref, counts[b.dataset.pref] || 0);
+      });
+    });
+    applyFilter(currentFilter);
+  }
+
+  /* filter */
+  var currentFilter = 'all';
+  function applyFilter(f){
+    currentFilter = f;
+    host.querySelectorAll('.region-blk').forEach(function(b){
+      var s = parseInt(b.dataset.sum, 10);
+      if (f === 'all') b.classList.remove('hide');
+      else if (f === 'lit') b.classList.toggle('hide', s === 0);
+      else b.classList.toggle('hide', s > 0);
+    });
+  }
+  document.querySelectorAll('.filter button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.filter button').forEach(function(x){ x.classList.remove('on'); });
+      btn.classList.add('on');
+      applyFilter(btn.dataset.f);
+    });
+  });
+
+  /* drawer */
+  var drw = document.getElementById('drw');
+  function openDrawer(name, c){
+    document.getElementById('drwName').textContent = name;
+    document.getElementById('drwSub').textContent =
+      c > 0 ? c + ' の想いが残されています' : 'まだ想いが残されていません';
+
+    var body = document.getElementById('drwBody');
+    var list = SAMPLE[name] || [];
+
+    if (c === 0 || !list.length){
+      body.innerHTML =
+        '<div class="drw-empty"><p>この地域には、まだ想いが<br>残されていません。<br><br>' +
+        'いちばん最初のひとつに、<br>なっていただけますか。</p></div>' +
+        '<div class="drw-cta"><a class="btn solid" href="memory.html">この地域に掲載する（無料）</a>' +
+        '<p class="drw-note">クレジットカードは必要ありません。</p></div>';
+    } else {
+      body.innerHTML = list.map(function(x){
+        var inner = '<div class="dot">' +
+          '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.2 6.2 6.2 2.2-6.2 2.2L12 19.8l-2.2-6.2L3.6 11.4l6.2-2.2z" fill="#8A7454"/></svg>' +
+          '</div><div><div class="nm">' + x.n + '</div><div class="yr">' + x.y + '</div>' +
+          '<div class="ms">' + x.m + '</div></div>';
+        return x.href
+          ? '<a class="ent ent-link" href="' + x.href + '">' + inner +
+            '<span class="go">ページを見る →</span></a>'
+          : '<div class="ent">' + inner + '</div>';
+      }).join('') +
+        '<div class="drw-cta"><a class="btn solid" href="memory.html">この地域に掲載する（無料）</a>' +
+        '<p class="drw-note">掲載は無料です。クレジットカードは必要ありません。</p></div>';
+    }
+    drw.classList.add('on');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer(){
+    drw.classList.remove('on');
+    document.body.style.overflow = '';
+  }
+  drw.querySelectorAll('[data-close]').forEach(function(el){
+    el.addEventListener('click', closeDrawer);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  render();
+
+  if (window.SITE_CONFIG && window.SITE_CONFIG.mapApi) {
+    fetch(window.SITE_CONFIG.mapApi).then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){ if (d && d.counts){ counts = d.counts; render(); } })
+      .catch(function(){});
+  }
+})();
+</script>
+</body>
+</html>
