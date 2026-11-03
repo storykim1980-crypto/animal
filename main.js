@@ -354,10 +354,13 @@
                      'sado', 'awaji', 'tanegashima', 'yakushima'];
     var INSET_KEYS = ['okinawa'];
 
-    var INK_LAND = '#E4DAC6';
-    var INK_EDGE = '#BCAB8C';
-    var GOLD = '#A8894F';
-    var DIM = '#C4B69C';
+    /* 夜空の実写の上に載るので、暗い地面向けの色にする */
+    var INK_LAND = '#FFFFFF';
+    var INK_LAND_OP = '.075';
+    var INK_EDGE = '#E8D9B4';
+    var GOLD = '#E8D9B4';
+    var DIM = '#E8D9B4';
+    var DIM_OP = '.30';
 
     /* ---------- 投影を作る ---------- */
     function makeProj(keys, box, pad) {
@@ -433,7 +436,7 @@
       }
       g += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) +
         '" r="' + (lit ? r : r * 0.6).toFixed(1) + '" fill="' + (lit ? GOLD : DIM) +
-        '" fill-opacity="' + (lit ? '.95' : '.62') + '"/>';
+        '" fill-opacity="' + (lit ? '.98' : DIM_OP) + '"/>';
       return g;
     }
 
@@ -443,17 +446,16 @@
       /* ===== 本土 ===== */
       var mainPath = pathOf(MAIN_KEYS, prMain);
 
-      g.push('<g transform="translate(2,3)" opacity=".07">' +
-        '<path d="' + mainPath + '" fill="#14130F"/></g>');
-      g.push('<path d="' + mainPath + '" fill="' + INK_LAND + '" stroke="' + INK_EDGE +
-        '" stroke-width=".85" stroke-linejoin="round"/>');
+      g.push('<path d="' + mainPath + '" fill="' + INK_LAND +
+        '" fill-opacity="' + INK_LAND_OP + '" stroke="' + INK_EDGE +
+        '" stroke-opacity=".72" stroke-width=".8" stroke-linejoin="round"/>');
 
       /* 内陸に薄いハッチ（等高線風） */
       g.push('<clipPath id="jpClip"><path d="' + mainPath + '"/></clipPath>');
-      g.push('<g clip-path="url(#jpClip)" opacity=".13">');
+      g.push('<g clip-path="url(#jpClip)" opacity=".5">');
       for (var yy = 0; yy < 400; yy += 11) {
         g.push('<line x1="0" y1="' + yy + '" x2="' + VW + '" y2="' + (yy + 5) +
-          '" stroke="#B09A78" stroke-width=".45" stroke-opacity=".5"/>');
+          '" stroke="' + INK_EDGE + '" stroke-width=".4" stroke-opacity=".09"/>');
       }
       g.push('</g>');
 
@@ -462,12 +464,14 @@
         '" height="' + INSET.h + '" fill="none" stroke="' + INK_EDGE +
         '" stroke-width=".7" stroke-dasharray="3 3" opacity=".7"/>');
       g.push('<text x="' + (INSET.x + 6) + '" y="' + (INSET.y + 11) +
-        '" font-size="6" letter-spacing="1.6" fill="' + INK_EDGE + '" font-family="serif">冲縄</text>');
+        '" font-size="6" letter-spacing="1.6" fill="' + INK_EDGE +
+        '" fill-opacity=".7" font-family="serif">冲縄</text>');
 
       if (prInset) {
         var insetPath = pathOf(INSET_KEYS, prInset);
-        g.push('<path d="' + insetPath + '" fill="' + INK_LAND + '" stroke="' + INK_EDGE +
-          '" stroke-width=".7" stroke-linejoin="round"/>');
+        g.push('<path d="' + insetPath + '" fill="' + INK_LAND +
+          '" fill-opacity="' + INK_LAND_OP + '" stroke="' + INK_EDGE +
+          '" stroke-opacity=".72" stroke-width=".7" stroke-linejoin="round"/>');
       }
 
       /* ===== ドット ===== */
@@ -490,7 +494,7 @@
         if (!pr) return;
         g.push('<text x="' + (pr.x(L[1]) + L[4]).toFixed(1) +
           '" y="' + (pr.y(L[2]) + L[5]).toFixed(1) +
-          '" font-size="6.8" letter-spacing=".9" fill="#4A453C" fill-opacity=".58" ' +
+          '" font-size="6.8" letter-spacing=".9" fill="#F2E7CE" fill-opacity=".74" ' +
           'text-anchor="' + L[3] + '" font-family="serif">' + L[0] + '</text>');
       });
 

@@ -181,7 +181,7 @@ body::after{
 .tlink:hover .ar{transform:translateX(5px)}
 
 /* ---------- section chrome ---------- */
-.sec{position:relative;padding:132px 0}
+.sec{position:relative;padding:clamp(84px,9vw,124px) 0}
 .sec.tight-p{padding:96px 0}
 .sec.dark{background:var(--night);color:#D9D3C8}
 .sec.paper2{background:var(--paper-2)}
@@ -568,29 +568,70 @@ body::after{
 /* =========================================================================
    MAP
    ========================================================================= */
-.map-wrap{display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(40px,6vw,84px);align-items:center}
+.map-wrap{display:grid;grid-template-columns:1fr 1.06fr;gap:clamp(36px,5vw,72px);align-items:center}
 .map-card{
-  background:var(--paper-2);border:1px solid var(--line);box-shadow:var(--shadow-s);
-  padding:clamp(24px,3vw,34px);position:relative;
+  background:linear-gradient(180deg,#FBFAF7 0%,var(--paper-2) 100%);
+  border:1px solid var(--line);box-shadow:var(--shadow-s);
+  padding:clamp(18px,2vw,24px);position:relative;
 }
 .map-card-h{display:flex;justify-content:space-between;align-items:baseline;
-  padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+  padding-bottom:13px;margin-bottom:14px;border-bottom:1px solid var(--line)}
 .map-card-h .t{font-family:var(--mincho);font-size:12.5px;letter-spacing:.2em;color:var(--ink)}
 .map-card-h .c{font-size:10px;letter-spacing:.14em;color:var(--gold)}
-.jp-map{position:relative}
-.jp-map svg{width:100%;height:auto}
+
+/* 地図と地域一覧を横並びにして、カードの高さを左コラムに合わせる */
+.map-card-bd{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);
+  gap:clamp(14px,1.6vw,20px);align-items:stretch}
+
+/* ---- 地図パネル：夜空の実写を背景に ---- */
+.jp-map{
+  position:relative;overflow:hidden;border:1px solid var(--line-gold);
+  background:var(--night);display:flex;
+}
+.jp-map::before{
+  content:"";position:absolute;inset:0;
+  background:url("img/sky-map-bg-s.jpg") center/cover no-repeat;
+  opacity:.92;
+}
+/* 写真の上に薄いグラデーションを重ねて、金色の線を読みやすくする */
+.jp-map::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(120% 80% at 50% 40%, rgba(8,12,22,.18) 0%, rgba(8,12,22,.62) 100%),
+    linear-gradient(180deg, rgba(8,12,22,.34) 0%, rgba(8,12,22,.10) 45%, rgba(8,12,22,.48) 100%);
+}
+.jp-map svg{position:relative;z-index:2;width:100%;height:auto;display:block}
 .jp-map .dot{transition:r .4s var(--ease),opacity .4s}
-.region-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
-  margin-top:18px;border:1px solid var(--line)}
+.region-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);
+  border:1px solid var(--line);align-content:stretch}
 .region-grid button{
-  background:var(--paper-2);padding:13px 15px;display:flex;justify-content:space-between;
+  background:var(--paper-2);padding:0 15px;display:flex;justify-content:space-between;
   align-items:center;font-size:11.5px;letter-spacing:.06em;color:var(--ink-3);
-  transition:background .3s,color .3s;
+  transition:background .3s,color .3s;min-height:0;
 }
 .region-grid button:hover{background:var(--paper-3);color:var(--ink)}
 .region-grid button b{font-family:var(--mincho);color:var(--gold);font-size:12px;font-weight:400}
 .region-grid button.zero b{color:var(--paper-4)}
-.region-grid button:last-child:nth-child(odd){grid-column:1 / -1}
+.map-card-ft{
+  margin-top:13px;padding-top:11px;border-top:1px solid var(--line);
+  font-size:10.5px;line-height:1.9;color:var(--ink-3);letter-spacing:.04em;
+}
+
+@media (max-width:860px){
+  .map-card-bd{grid-template-columns:1fr}
+  .jp-map{max-width:260px;margin:0 auto;width:100%}
+  .region-grid{grid-template-columns:repeat(2,1fr);margin-top:13px}
+}
+@media (max-width:640px){
+  /* モバイルは縦に長くなりすぎないよう、余白を詰める */
+  #map .notice{margin-top:40px !important}
+  .map-card-ft{font-size:10px;line-height:1.8;margin-top:11px;padding-top:9px}
+  .region-grid button{padding:0 12px;font-size:11px}
+}
+@media (max-width:520px){
+  .map-card-bd{gap:12px}
+  .jp-map{max-width:215px}
+}
 
 /* =========================================================================
    KEEPSAKES
@@ -1062,6 +1103,7 @@ footer{background:#0A0C10;color:#79746C;padding:80px 0 44px;font-size:11.5px;lin
 .hero3-txt{max-width:780px}
 .hero3-h1{font-size:clamp(28px,4.6vw,50px);line-height:1.62}
 .hero3-h1 .ln:last-child>span{white-space:nowrap}
+@media (max-width:900px){.hero3-h1 .ln:last-child>span{white-space:normal}}
 
 .hero3-actions .btn.solid{
   background:transparent;color:#14130F;border-color:#F6F1E8;
@@ -1381,7 +1423,7 @@ footer{background:#0A0C10;color:#79746C;padding:80px 0 44px;font-size:11.5px;lin
   .hero3-h1{text-shadow:0 2px 26px rgba(0,0,0,.55),0 0 60px rgba(0,0,0,.35)}
   .hero3-sub{text-shadow:0 1px 18px rgba(0,0,0,.6)}
   .hero3-in{padding-bottom:0}
-  .hero3-h1{font-size:clamp(24px,6.4vw,34px);line-height:1.66}
+  .hero3-h1{font-size:clamp(21px,5.9vw,30px);line-height:1.66;letter-spacing:.03em}
   .hero3-sub{font-size:12.6px;line-height:2.1;margin-top:22px}
   .hero3-actions{margin-top:24px}
 }
@@ -1628,3 +1670,41 @@ footer{background:#0A0C10;color:#79746C;padding:80px 0 44px;font-size:11.5px;lin
   letter-spacing:.04em;text-align:center;
 }
 .ord-faq-more a{color:var(--green);text-decoration:underline}
+
+/* ══════════════════════════════════════════════════════
+   モバイル：日本語の折り返し改善 + ヒーロー強調
+   ══════════════════════════════════════════════════════ */
+.hero3-sub b.hi{
+  display:inline-block;margin:6px 0;padding:7px 14px;
+  background:rgba(168,137,79,.13);border:1px solid var(--line-gold);
+  font-weight:500;color:var(--ink);letter-spacing:.05em;font-size:12.5px;
+}
+
+@media (max-width:640px){
+  /* 日本語の禁則・フレーズ単位の折り返し */
+  body{line-break:strict;word-break:auto-phrase;overflow-wrap:break-word}
+
+  /* 見出し系：行の長さをそろえる */
+  h1,h2,h3,.h2,.h3c,.statement-tx,.quote-tx,.hero3-h1,
+  .sec-head .h2,.cmp-sec .h2{text-wrap:balance}
+
+  /* 本文：最後の行が1〜2文字で取り残されるのを防ぐ */
+  p,.body,.lead,.statement-note,.statement-tx,.quote-tx,
+  .hero3-sub,.hero3-note,.sky-src,.cmp-sec p,.cmp td,.faq .a p{
+    text-wrap:pretty;
+  }
+
+  /* 折り返しが増えがちなリード文だけ、ほんの少し字を詰める */
+  .lead{font-size:13.4px;line-height:2.12;letter-spacing:.055em}
+  .body{font-size:13px;line-height:2.18}
+  .statement-note{font-size:12.4px;line-height:2.2}
+  .hero3-sub{font-size:12.8px;line-height:2.15}
+  .sky-src{font-size:10.8px;line-height:2.05}
+}
+
+/* balance / pretty 非対応ブラウザ向けの保険：極端な孤立行を避ける */
+@supports not (text-wrap: pretty){
+  @media (max-width:640px){
+    p,.body,.lead,.statement-note{letter-spacing:.02em}
+  }
+}
