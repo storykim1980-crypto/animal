@@ -2315,3 +2315,174 @@ body.nav-lock{position:fixed;left:0;right:0;width:100%;overflow:hidden}
 /* ── 地図の件数（19px・金）：2.99:1 → 4.59:1 ── */
 .map-count b{color:#836B3E}
 .sky-data dd small{color:#A8A49A}
+
+/* ══════════════════════════════════════════════════════════════
+   PREMIUM TYPOGRAPHY — 2026 renewal
+   1) ウェブフォントを最優先（システム明朝に負けていた不具合を是正）
+   2) 詰め組み（palt）で日本語の不自然なアキを除去
+   3) 約物処理・行末バランス・見出しの最適化
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --mincho:"Zen Old Mincho","Hiragino Mincho ProN","Hiragino Mincho Pro",
+           "Yu Mincho",YuMincho,"Noto Serif JP",serif;
+  --gothic:"Zen Kaku Gothic New","Hiragino Sans","Hiragino Kaku Gothic ProN",
+           "Yu Gothic",YuGothic,"Noto Sans JP",sans-serif;
+
+  /* 上質な色調：彩度を落とし、深みを持たせた金 */
+  --gold:#9C7C46;
+  --gold-2:#C4A675;
+  --gold-3:#E2CFAB;
+  --ink:#100E0A;
+  --ink-2:#241F18;
+  --ink-3:#463F35;
+}
+
+/* ── 日本語組版の基礎：詰め組み（かなのアキを詰める）── */
+body,.display,.h1,.h2,.h3,.h4,.lead,.body,.small,.tiny,
+.btn,.nav a,.ftr,.ftr-voice,.ftr-cr,.ftr-disc-h,
+.sec-head .h2,.statement-tx,.statement-tx em,
+.faq-q,.faq-a,.plan-name,.step-tx,.price-val,
+.cmp-tbl th,.cmp-tbl td,.entry-name,.mem-line{
+  font-feature-settings:"palt" 1;
+  text-spacing-trim:trim-start;
+}
+
+/* ── 行末の整え：見出しは balance、本文は pretty ── */
+.display,.h1,.h2,.h3,.h4,.sec-head .h2,.statement-tx,.faq-q,.plan-name{
+  text-wrap:balance;
+}
+.lead,.body,.small,.tiny,.faq-a,.step-tx,.mem-line,.entry-tx{
+  text-wrap:pretty;
+}
+
+/* ── 見出し：明朝の品格を出す（詰めすぎない追送り）── */
+.display{
+  font-family:var(--mincho);font-weight:500;
+  letter-spacing:.028em;line-height:1.72;
+}
+.h2,.sec-head .h2{
+  font-family:var(--mincho);font-weight:500;
+  letter-spacing:.032em;line-height:1.86;
+}
+.h3{
+  font-family:var(--mincho);font-weight:500;
+  letter-spacing:.028em;line-height:1.9;
+}
+.statement-tx{
+  font-family:var(--mincho);font-weight:400;
+  letter-spacing:.045em;line-height:2.05;
+}
+
+/* ── 本文：明朝の可読性を確保する行送り ── */
+.lead{
+  font-family:var(--mincho);font-weight:400;
+  letter-spacing:.038em;line-height:2.0;
+}
+.body{font-family:var(--mincho);font-weight:400;letter-spacing:.03em;line-height:1.98}
+
+/* ── 小さな英字ラベルは追送りを活かす（詰め組みを解除）── */
+.lbl,.eyebrow,.kanji-num,.en,.edit-num,.sec-en{
+  font-feature-settings:normal;
+  text-spacing-trim:normal;
+}
+.lbl{font-family:var(--gothic);font-weight:500;letter-spacing:.2em}
+.kanji-num{font-family:var(--mincho);font-weight:500;letter-spacing:.24em}
+
+/* ── 選択・アンチエイリアス ── */
+::selection{background:#C4A675;color:#100E0A}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+
+/* ══════════════════════════════════════════════════════════════
+   MODERN MOTION — スクロール連動 + ページ遷移（2026）
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── View Transitions：ページ間の溶け合い（対応ブラウザのみ）── */
+@view-transition{navigation:auto}
+
+@media (prefers-reduced-motion: no-preference){
+  ::view-transition-old(root){
+    animation:vt-fade-out .26s cubic-bezier(.4,0,1,1) both;
+  }
+  ::view-transition-new(root){
+    animation:vt-fade-in .42s cubic-bezier(0,0,.2,1) both;
+  }
+}
+@keyframes vt-fade-out{to{opacity:0}}
+@keyframes vt-fade-in{from{opacity:0}to{opacity:1}}
+
+/* ── スクロール連動の出現（animation-timeline: view()）──
+   対応ブラウザでは JS の IntersectionObserver を無効化して、
+   スクロール位置に紐づく、より上質な動きに切り替える            */
+@supports (animation-timeline: view()){
+  [data-rv]{opacity:1!important;transform:none!important}
+  [data-rv].in{opacity:1!important;transform:none!important}
+
+  @media (prefers-reduced-motion: no-preference){
+    [data-rv]{
+      animation:rv-rise linear both;
+      animation-timeline:view();
+      animation-range:entry 6% cover 30%;
+    }
+    /* 見出しは少し遅らせて奥行きを出す */
+    .sec-head[data-rv]{animation-range:entry 2% cover 26%}
+  }
+}
+@keyframes rv-rise{
+  from{opacity:0;transform:translateY(28px)}
+  60% {opacity:1}
+  to  {opacity:1;transform:none}
+}
+
+@media (prefers-reduced-motion: reduce){
+  [data-rv]{opacity:1!important;transform:none!important;animation:none!important}
+  ::view-transition-old(root),::view-transition-new(root){animation:none!important}
+}
+
+/* ── 滑らかな移動・フォーカスの上質化 ── */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+:focus-visible{
+  outline:2px solid var(--gold-2);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+/* ── 助数詞（枚・件など）を 13px 以上に ── */
+.stats4 b em{font-size:.56em}
+
+/* ══════════════════════════════════════════════════════════════
+   PREMIUM DETAIL — 余白・数字・約物の上質化
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 余白：上質さは「間」で決まる（PC は大きく、携帯は据え置き）── */
+@media (min-width:900px){
+  .sec{padding:clamp(120px,10.5vw,156px) 0}
+  .sec.tight-p{padding:clamp(104px,9vw,132px) 0}
+  .sec-head{margin-bottom:76px}
+  .sec-head .lbl{margin-bottom:30px}
+  .sec-head .h2{margin-bottom:26px}
+}
+.sec-head .h2{margin-bottom:24px}
+
+/* ── 数字：等幅・ライニングで品よく揃える ── */
+.stats4 b,.price-val,.price-num,.cnt,.map-count b,.cmp-tbl td,.step-num{
+  font-variant-numeric:lining-nums tabular-nums;
+}
+.kanji-num,.edit-num{font-variant-numeric:lining-nums}
+
+/* ── 鍵括弧・中黒まわりを詰める（上質な日本語組版）── */
+.quote-tx,.statement-tx{text-indent:-.4em}
+
+/* ── 区切り線を金の細線に（上質なアクセント）── */
+.sec + .sec{border-top:1px solid rgba(156,124,70,.13)}
+.sec.dark + .sec,.sec + .sec.dark{border-top:none}
+
+/* ── スクロールバー（対応ブラウザ）── */
+@supports selector(::-webkit-scrollbar){
+  ::-webkit-scrollbar{width:9px}
+  ::-webkit-scrollbar-track{background:var(--paper)}
+  ::-webkit-scrollbar-thumb{background:rgba(156,124,70,.34);border-radius:0}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(156,124,70,.55)}
+}
+html{scrollbar-color:rgba(156,124,70,.34) var(--paper);scrollbar-width:thin}
