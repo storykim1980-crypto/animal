@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>むぎ｜うちの子の星</title>
+<meta name="description" content="むぎ 2012 — 2026。こもれびアトリエの思い出ページ。">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1B1710">
+<meta property="og:title" content="むぎ ｜ うちの子の星">
+<meta property="og:description" content="2012 — 2026。あの子のいた時間。">
+<meta property="og:image" content="../img/og.jpg">
+<meta property="og:type" content="article">
+<style>
+@keyframes mFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes mRise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes mBreath{0%,100%{opacity:.35}50%{opacity:.85}}
+@keyframes mHero{to{transform:scale(1)}}
+
+:root{
+  --m-paper:#0E0C09;
+  --m-ink:#F4EFE6;
+  --m-sub:#B5AFA4;
+  --m-faint:#9A948B;
+  --m-gold:#C9AE7B;
+  --m-gold-d:#A8894F;
+  --m-line:rgba(244,239,230,.13);
+  --m-line-g:rgba(201,174,123,.26);
+  --mincho:"Hiragino Mincho ProN","Hiragino Mincho Pro","Yu Mincho",YuMincho,
+           "Shippori Mincho","Noto Serif JP","Noto Serif CJK JP","Songti SC",serif;
+  --gothic:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",YuGothic,
+           "Zen Kaku Gothic New","Noto Sans JP","Noto Sans CJK JP",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:var(--gothic);background:var(--m-paper);color:var(--m-ink);
+  line-height:2.1;letter-spacing:.03em;-webkit-font-smoothing:antialiased;
+  font-feature-settings:"palt" 1;overflow-x:hidden;
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+
+.mp-hero{position:relative;min-height:min(92svh,900px);display:flex;align-items:flex-end;
+  overflow:hidden;background:#141110}
+.mp-hero-media{position:absolute;inset:0;z-index:0}
+.mp-hero-media img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;
+  filter:saturate(.82) brightness(.94);transform:scale(1.05);
+  animation:mHero 14s cubic-bezier(.16,1,.3,1) forwards}
+.mp-hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(14,12,9,.62) 0%,rgba(14,12,9,.06) 30%,rgba(14,12,9,0) 48%),
+    linear-gradient(0deg,var(--m-paper) 0%,rgba(14,12,9,.94) 16%,rgba(14,12,9,.42) 44%,rgba(14,12,9,0) 70%),
+    linear-gradient(90deg,rgba(14,12,9,.72) 0%,rgba(14,12,9,.30) 34%,rgba(14,12,9,0) 62%);}
+.mp-hero-in{position:relative;z-index:2;width:100%;max-width:1200px;margin:0 auto;
+  padding:0 clamp(24px,6vw,88px) clamp(48px,9vh,96px);text-align:left}
+.mp-hero-in .inner{max-width:520px;margin-left:0}
+.mp-brand{position:absolute;top:clamp(22px,4vh,40px);left:0;right:0;z-index:3;text-align:center;
+  font-size:13.5px;letter-spacing:.28em;color:rgba(244,239,230,.78)}
+.mp-brand a{transition:color .3s}
+.mp-brand a:hover{color:var(--m-gold)}
+.mp-name{font-family:var(--mincho);font-weight:400;font-size:clamp(38px,8vw,74px);
+  line-height:1.3;letter-spacing:.16em;color:#FBF7EF;
+  text-shadow:0 4px 44px rgba(0,0,0,.45);
+  animation:mRise 1.5s cubic-bezier(.16,1,.3,1) .35s both}
+.mp-years{margin-top:18px;font-family:var(--mincho);font-size:clamp(14px,1.8vw,16px);
+  letter-spacing:.42em;color:var(--m-gold);
+  animation:mRise 1.5s cubic-bezier(.16,1,.3,1) .55s both}
+.mp-kind{margin-top:10px;font-size:13px;letter-spacing:.26em;color:rgba(244,239,230,.78);
+  animation:mRise 1.5s cubic-bezier(.16,1,.3,1) .65s both}
+.mp-rule{width:44px;height:1px;margin:clamp(26px,4vh,36px) auto;background:var(--m-line-g);
+  animation:mFade 1.6s ease .8s both}
+
+.mp-wrap{max-width:760px;margin:0 auto;padding:0 28px}
+.mp-lead{font-family:var(--mincho);font-size:clamp(14px,1.9vw,17px);line-height:2.45;
+  letter-spacing:.09em;color:#E7E1D6;text-align:center;padding:clamp(20px,3vw,32px) 0 0;
+  animation:mFade 1.6s ease .95s both}
+.mp-lead .ln{display:block}
+
+.mp-sec{padding:clamp(46px,7vw,76px) 0}
+.mp-sec + .mp-sec{border-top:1px solid var(--m-line)}
+.mp-lbl{display:flex;align-items:center;gap:14px;justify-content:center;
+  font-size:13.5px;letter-spacing:.28em;color:var(--m-gold);margin-bottom:clamp(30px,5vw,44px)}
+.mp-lbl::before,.mp-lbl::after{content:"";width:26px;height:1px;background:var(--m-line-g)}
+
+.sky-box{border:1px solid var(--m-line-g);padding:clamp(26px,4vw,44px);position:relative;
+  background:rgba(255,255,255,.012)}
+.sky-box::before{content:"";position:absolute;inset:8px;
+  border:1px solid rgba(201,174,123,.09);pointer-events:none}
+.sky-h{text-align:center;margin-bottom:30px}
+.sky-h .t{font-family:var(--mincho);font-size:clamp(15px,2vw,18px);letter-spacing:.2em;color:#F2EDE4}
+.sky-h .s{margin-top:10px;font-size:13.5px;letter-spacing:.26em;color:var(--m-gold)}
+.sky-chart{margin:0 auto 30px;width:100%;max-width:520px}
+.sky-chart svg{width:100%;height:auto}
+.sky-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+  background:var(--m-line);border:1px solid var(--m-line)}
+.sky-grid>div{background:#15120E;padding:16px 18px;text-align:center}
+.sky-grid dt{font-size:13px;letter-spacing:.22em;color:var(--m-faint);margin-bottom:7px}
+.sky-grid dd{font-family:var(--mincho);font-size:15px;letter-spacing:.06em;color:var(--m-gold)}
+.sky-note{margin-top:22px;text-align:center;font-size:13.5px;line-height:1.9;
+  letter-spacing:.08em;color:var(--m-faint)}
+
+.prof{border:1px solid var(--m-line);background:rgba(255,255,255,.014)}
+.prof>div{display:grid;grid-template-columns:112px 1fr;border-bottom:1px solid var(--m-line)}
+.prof>div:last-child{border-bottom:none}
+.prof dt{padding:14px 18px;font-size:13.5px;letter-spacing:.12em;color:var(--m-gold);
+  border-right:1px solid var(--m-line);background:rgba(201,174,123,.03);line-height:1.9}
+.prof dd{padding:14px 20px;font-family:var(--mincho);font-size:15.5px;
+  letter-spacing:.06em;color:#DDD7CC}
+
+.tl{position:relative;padding-left:26px}
+.tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;
+  background:linear-gradient(var(--m-line-g),rgba(201,174,123,.06))}
+.tl li{position:relative;padding-bottom:26px;list-style:none}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:"";position:absolute;left:-25px;top:9px;width:7px;height:7px;
+  border:1px solid var(--m-gold);transform:rotate(45deg);background:var(--m-paper)}
+.tl .d{font-size:13.5px;letter-spacing:.2em;color:var(--m-gold);margin-bottom:6px}
+.tl .h{font-family:var(--mincho);font-size:16px;letter-spacing:.07em;color:#E6E0D5;
+  display:block;margin-bottom:4px}
+.tl p{font-size:15.5px;line-height:1.92;letter-spacing:.025em;color:var(--m-sub)}
+
+.mp-quote{text-align:center;padding:0 0 6px}
+.mp-quote p{font-family:var(--mincho);font-size:clamp(14px,2vw,18px);line-height:2.4;
+  letter-spacing:.1em;color:#EDE7DC}
+.mp-quote span{display:block;margin-top:16px;font-size:13.5px;
+  letter-spacing:.26em;color:var(--m-faint)}
+
+.thoughts{display:flex;flex-direction:column}
+.thought{padding:26px 0;border-bottom:1px solid var(--m-line);display:flex;gap:18px;
+  animation:mFade .8s ease both}
+.thought:first-child{border-top:1px solid var(--m-line)}
+.thought .dot{width:32px;height:32px;flex:none;border-radius:50%;display:grid;
+  place-items:center;border:1px solid var(--m-line-g);margin-top:5px}
+.thought .dot svg{width:13px;height:13px;opacity:.7}
+.thought .b{flex:1}
+.thought .w{font-size:13.5px;letter-spacing:.2em;color:var(--m-gold);margin-bottom:8px}
+.thought .tx{font-family:var(--mincho);font-size:16px;line-height:2.05;
+  letter-spacing:.05em;color:#DCD6CB}
+.thought .at{font-size:13.5px;letter-spacing:.14em;color:var(--m-faint);margin-top:8px}
+
+.candle-box{text-align:center}
+.candle-btn{display:inline-flex;flex-direction:column;align-items:center;gap:14px;
+  padding:30px 44px;border:1px solid var(--m-line-g);
+  transition:.5s cubic-bezier(.16,1,.3,1)}
+.candle-btn:hover{border-color:var(--m-gold);background:rgba(201,174,123,.05)}
+.candle-btn svg{width:30px;height:30px}
+.candle-btn .flame{animation:mBreath 2.6s ease-in-out infinite;transform-origin:center}
+.candle-btn span{font-size:13.5px;letter-spacing:.14em;color:var(--m-sub)}
+.candle-count{margin-top:22px;font-size:13.5px;letter-spacing:.2em;color:var(--m-faint)}
+.candle-count b{font-family:var(--mincho);color:var(--m-gold);font-size:14px;letter-spacing:.05em}
+
+.share{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.share button{border:1px solid var(--m-line);padding:13px 24px;font-size:13.5px;
+  letter-spacing:.12em;color:var(--m-sub);transition:.35s}
+.share button:hover{border-color:var(--m-gold);color:var(--m-gold)}
+
+.mp-foot{padding:clamp(50px,8vw,80px) 0 clamp(40px,6vw,64px);
+  border-top:1px solid var(--m-line);text-align:center}
+.mp-foot .tx{font-family:var(--mincho);font-size:clamp(16px,2vw,18px);line-height:2.05;
+  letter-spacing:.1em;color:var(--m-sub)}
+.mp-foot .cta{margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.mbtn{display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--m-line-g);padding:15px 32px;font-size:14px;
+  letter-spacing:.14em;color:var(--m-ink);transition:.4s}
+.mbtn:hover{background:var(--m-gold);border-color:var(--m-gold);color:#141110}
+.mbtn.solid{background:var(--m-gold);border-color:var(--m-gold);color:#141110}
+.mbtn.solid:hover{background:transparent;color:var(--m-ink);border-color:var(--m-line-g)}
+.mp-meta{padding:30px 0 60px;border-top:1px solid var(--m-line);font-size:14px;
+  line-height:2.1;letter-spacing:.06em;color:#9E988E;text-align:center}
+.mp-meta a{border-bottom:1px solid rgba(244,239,230,.16);padding-bottom:2px}
+.mp-meta a:hover{color:var(--m-gold)}
+.mp-meta-tx{line-height:1.95;letter-spacing:.04em;color:#9E988E}
+.mp-meta-tx a{color:var(--m-ink);border-bottom:1px solid var(--m-line-g);padding-bottom:2px}
+.mp-meta-ln{margin:22px 0 0;display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:center;font-size:13.5px}
+.mp-meta-ln a{color:#B5AFA4;letter-spacing:.04em;border-bottom:1px solid transparent;transition:.35s}
+.mp-meta-ln a:hover{color:var(--m-gold);border-bottom-color:var(--m-line-g)}
+.mp-meta-cr{margin-top:20px;font-size:13.5px;letter-spacing:.12em;color:var(--m-faint)}
+
+.badge{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--m-line-g);
+  padding:6px 14px;font-size:13.5px;letter-spacing:.12em;color:var(--m-gold)}
+.badge::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--m-gold);
+  opacity:.8}
+
+@media(max-width:760px){
+  .mp-hero{min-height:min(86svh,760px)}
+  .mp-hero-media img{object-position:74% 34%}
+  .mp-hero-in{text-align:center;padding-bottom:clamp(40px,7vh,64px)}
+  .mp-hero-in .inner{max-width:100%;margin:0 auto}
+  .mp-rule{margin-left:auto!important}
+  .mp-hero::after{
+    background:
+      linear-gradient(180deg,rgba(14,12,9,.55) 0%,rgba(14,12,9,0) 26%),
+      linear-gradient(0deg,var(--m-paper) 0%,rgba(14,12,9,.94) 22%,rgba(14,12,9,.40) 52%,rgba(14,12,9,0) 76%);}
+}
+@media(max-width:600px){
+  .sky-grid{grid-template-columns:1fr}
+  .thought{gap:14px}
+  .candle-btn{padding:26px 32px}
+  .mp-hero{min-height:82svh}
+  .prof>div{grid-template-columns:88px 1fr}
+  .prof dt{padding:12px 12px;font-size:13px}
+  .prof dd{padding:12px 14px;font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<header class="mp-hero">
+  <div class="mp-hero-media">
+    <img src="../img/hero-1600.jpg" alt="むぎ" width="1600" height="900" fetchpriority="high">
+  </div>
+  <div class="mp-brand">
+    <a href="../index.html">うちの子の星 ／ KOMOREBI ATELIER</a>
+  </div>
+  <div class="mp-hero-in">
+   <div class="inner">
+    <h1 class="mp-name">むぎ</h1>
+    <div class="mp-years">2012 — 2026</div>
+    <div class="mp-kind">柴犬（赤） ・ 東京都</div>
+    <div class="mp-rule" style="margin-left:0"></div>
+   </div>
+  </div>
+</header>
+
+<div class="mp-wrap">
+
+  <p class="mp-lead">毎朝、玄関まで見送りに来てくれました。<br>最後の日も、同じ場所で待っていました。</p>
+
+  <section class="mp-sec">
+    <div class="mp-lbl">ABOUT</div>
+    <dl class="prof"><div><dt>よび名</dt><dd>むぎ、むーちゃん</dd></div><div><dt>犬種</dt><dd>柴犬（赤）</dd></div><div><dt>お迎えした年</dt><dd>2012年</dd></div><div><dt>好きだったもの</dt><dd>日向、乾燥したさつまいも、雨の日の窓辺</dd></div><div><dt>苦手だったもの</dt><dd>掃除機、耳掃除、知らない人の帽子</dd></div><div><dt>いた場所</dt><dd>東京都</dd></div></dl>
+  </section>
+
+  <section class="mp-sec">
+    <div class="mp-lbl">THE SKY OF THAT DAY</div>
+    <div class="sky-box">
+      <div class="sky-h">
+        <div class="t">その日の空</div>
+        <div class="s">2026.11.03 ・ 21:00 ・ 東京都</div>
+      </div>
+      <div class="sky-chart"><svg viewBox="0 0 560 230" xmlns="http://www.w3.org/2000/svg"><line x1="140.0" y1="0" x2="140.0" y2="230" stroke="#C9AE7B" stroke-opacity=".09" stroke-width=".6"/><line x1="280.0" y1="0" x2="280.0" y2="230" stroke="#C9AE7B" stroke-opacity=".09" stroke-width=".6"/><line x1="420.0" y1="0" x2="420.0" y2="230" stroke="#C9AE7B" stroke-opacity=".09" stroke-width=".6"/><line x1="0" y1="115.0" x2="560" y2="115.0" stroke="#C9AE7B" stroke-opacity=".09" stroke-width=".6"/><path d="M381.1,96.3 L64.0,64.0 L462.3,67.4 L496.0,166.0" fill="none" stroke="#C9AE7B" stroke-opacity=".30" stroke-width=".7" stroke-dasharray="2 4"/><circle cx="381.1" cy="96.3" r="6.5" fill="none" stroke="#C9AE7B" stroke-opacity=".26" stroke-width=".6"/><circle cx="381.1" cy="96.3" r="2.5" fill="#C9AE7B" fill-opacity=".92"/><text x="370.1" y="100.3" font-size="26" letter-spacing="1.4" fill="#A8A196" font-family="serif" text-anchor="end">デネブ</text><circle cx="64.0" cy="64.0" r="6.5" fill="none" stroke="#C9AE7B" stroke-opacity=".26" stroke-width=".6"/><circle cx="64.0" cy="64.0" r="2.5" fill="#C9AE7B" fill-opacity=".92"/><text x="75.0" y="68.0" font-size="26" letter-spacing="1.4" fill="#A8A196" font-family="serif" text-anchor="start">カペラ</text><circle cx="462.3" cy="67.4" r="6.5" fill="none" stroke="#C9AE7B" stroke-opacity=".26" stroke-width=".6"/><circle cx="462.3" cy="67.4" r="2.5" fill="#C9AE7B" fill-opacity=".92"/><text x="451.3" y="71.4" font-size="26" letter-spacing="1.4" fill="#A8A196" font-family="serif" text-anchor="end">ベガ</text><circle cx="496.0" cy="166.0" r="6.5" fill="none" stroke="#C9AE7B" stroke-opacity=".26" stroke-width=".6"/><circle cx="496.0" cy="166.0" r="2.5" fill="#C9AE7B" fill-opacity=".92"/><text x="485.0" y="170.0" font-size="26" letter-spacing="1.4" fill="#A8A196" font-family="serif" text-anchor="end">アルタイル</text></svg></div>
+      <dl class="sky-grid">
+        <div><dt>MOON</dt><dd>32% ・ 下弦の月</dd></div>
+        <div><dt>OVERHEAD</dt><dd>デネブ</dd></div>
+        <div><dt>デネブ</dt><dd>50.1°</dd></div><div><dt>カペラ</dt><dd>33.0°</dd></div>
+      </dl>
+      <p class="sky-note">
+        天文計算による実際の値です。誰が計算しても同じ値になります。<br>
+        NASA / JPL 天体暦 ／ ヒッパルコス星表
+      </p>
+    </div>
+  </section>
+
+  <section class="mp-sec">
+    <div class="mp-lbl">LITTLE HISTORY</div>
+    <ul class="tl"><li><div class="d">2012.05.14</div><span class="h">うちに来た日</span><p>段ボールのなかで、ずっと震えていました。夜になっても泣きやまなくて、結局その日は一緒に寝ました。</p></li><li><div class="d">2015.09</div><span class="h">いちばん長く散歩した年</span><p>川沿いを、毎朝40分。雨の日も、雪の日も。この年だけ、なぜか一度も休みませんでした。</p></li><li><div class="d">2021.03</div><span class="h">引っ越し</span><p>新しい家の窓辺が気に入って、そこから一日の大半を眺めていました。日向の位置で、居場所が変わるのが分かりました。</p></li><li><div class="d">2026.11.03</div><span class="h">最後の夜</span><p>21時、いつもの場所で待っていました。月は32%ほど欠けていて、西の空にベガが低く見えていました。</p></li></ul>
+  </section>
+
+  <section class="mp-sec" style="padding-top:0">
+    <div class="mp-quote">
+      <p>「ありがとう」より先に、<br>「またね」と言ってしまいました。</p>
+      <span>FOR むぎ</span>
+    </div>
+  </section>
+  <section class="mp-sec candle-box">
+    <div class="mp-lbl">LIGHT A CANDLE</div>
+    <button class="candle-btn" id="candleBtn" aria-label="ろうそくを灯す">
+      <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <path class="flame" d="M20 6c3.6 4.4 5.4 7.6 5.4 10.2 0 3-2.4 5.4-5.4 5.4s-5.4-2.4-5.4-5.4C14.6 13.6 16.4 10.4 20 6z"
+              fill="#C9AE7B" opacity=".85"/>
+        <path d="M14 23h12v10H14z" stroke="#A8894F" stroke-width="1" opacity=".55"/>
+        <path d="M20 23v-1.4" stroke="#A8894F" stroke-width="1" opacity=".55"/>
+      </svg>
+      <span id="candleLabel">ろうそくを灯す</span>
+    </button>
+    <p class="candle-count"><b id="candleNum">0</b> の灯りがともっています</p>
+  </section>
+
+  <section class="mp-sec">
+    <div class="mp-lbl">MESSAGES</div>
+    <div class="thoughts"><div class="thought" style="animation-delay:0.00s"><div class="dot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.2 6.2 6.2 2.2-6.2 2.2L12 19.8l-2.2-6.2L3.6 11.4l6.2-2.2z" fill="#C9AE7B"/></svg></div><div class="b"><div class="w">ご家族</div><div class="tx">いちばん好きだった場所は、窓のところでした。日向が動くと、自分も動いて、いつも光のなかにいました。</div><div class="at">2026.11.03</div></div></div><div class="thought" style="animation-delay:0.12s"><div class="dot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.2 6.2 6.2 2.2-6.2 2.2L12 19.8l-2.2-6.2L3.6 11.4l6.2-2.2z" fill="#C9AE7B"/></svg></div><div class="b"><div class="w">ご友人</div><div class="tx">はじめて会った日、玄関で三回だけ吠えて、それから一度も吠えませんでした。覚えていますか、と聞きたかった。</div><div class="at">2026.11.04</div></div></div><div class="thought" style="animation-delay:0.24s"><div class="dot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.2 6.2 6.2 2.2-6.2 2.2L12 19.8l-2.2-6.2L3.6 11.4l6.2-2.2z" fill="#C9AE7B"/></svg></div><div class="b"><div class="w">ご家族</div><div class="tx">最後の散歩は、いつもの川沿いでした。途中で座り込んで、しばらく動かなくて。あれが、あの子のさよならだったのかなと思います。</div><div class="at">2026.11.05</div></div></div></div>
+  </section>
+  <section class="mp-sec">
+    <div class="mp-lbl">SHARE</div>
+    <div class="share">
+      <button id="copyBtn">URLをコピー</button>
+      <button id="lineBtn">LINEで送る</button>
+      <button id="xBtn">Xに投稿</button>
+    </div>
+  </section>
+
+</div>
+
+<div class="mp-wrap">
+  <div class="mp-foot">
+    <p class="tx">
+      このページは、ご家族のご依頼で<br>
+      こもれびアトリエがおつくりしました。
+    </p>
+    <div class="cta">
+      <a class="mbtn solid" href="../memory.html">うちの子も登録する（無料）</a>
+      <a class="mbtn" href="../index.html">うちの子の星へ</a>
+    </div>
+    <div style="margin-top:28px"><span class="badge">UNLISTED ・ リンクを知っている人のみ ・ 検索には出ません</span></div>
+  </div>
+
+  <div class="mp-meta">
+    <p class="mp-meta-tx">
+      掲載は無料です。削除も、いつでも無料で承ります。<br>
+      このページの削除をご希望の場合は<a href="../faq.html">よくあるご質問</a>からご連絡ください。<br>
+      火葬・埋葬・供養・納骨は行っておりません。
+    </p>
+    <nav class="mp-meta-ln">
+      <a href="../tokushoho.html">特定商取引法に基づく表記</a>
+      <a href="../privacy.html">プライバシーポリシー</a>
+      <a href="../terms.html">利用規約</a>
+      <a href="../ai-policy.html">AIの利用について</a>
+    </nav>
+    <div class="mp-meta-cr">&copy; 2026 KOMOREBI ATELIER</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var KEY = 'komorebi_candle_mugi';
+  var btn = document.getElementById('candleBtn');
+  var num = document.getElementById('candleNum');
+  var lab = document.getElementById('candleLabel');
+  var n = 0, lit = false;
+  try {
+    n = parseInt(localStorage.getItem(KEY) || '0', 10) || 0;
+    lit = localStorage.getItem(KEY + '_me') === '1';
+  } catch (e) {}
+  function paint(){
+    num.textContent = n;
+    lab.textContent = lit ? '灯しました' : 'ろうそくを灯す';
+    btn.style.borderColor = lit ? 'rgba(201,174,123,.55)' : '';
+  }
+  paint();
+  btn.addEventListener('click', function(){
+    if (lit) return;
+    lit = true; n++;
+    try {
+      localStorage.setItem(KEY, String(n));
+      localStorage.setItem(KEY + '_me', '1');
+    } catch (e) {}
+    paint();
+  });
+
+  var url = location.href, title = "むぎ ｜ うちの子の星";
+  var copy = document.getElementById('copyBtn');
+  copy && copy.addEventListener('click', function(){
+    var done = function(){
+      copy.textContent = 'コピーしました';
+      setTimeout(function(){ copy.textContent = 'URLをコピー'; }, 2000);
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, done);
+    else {
+      var t = document.createElement('textarea'); t.value = url;
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      t.remove(); done();
+    }
+  });
+  var line = document.getElementById('lineBtn');
+  line && line.addEventListener('click', function(){
+    window.open('https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(url), '_blank');
+  });
+  var x = document.getElementById('xBtn');
+  x && x.addEventListener('click', function(){
+    window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) +
+      '&text=' + encodeURIComponent(title), '_blank');
+  });
+})();
+</script>
+</body>
+</html>

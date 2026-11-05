@@ -31,7 +31,7 @@
       <a href="index.html#sky">その日の空</a>
       <a href="map.html">思い出マップ</a>
       <a href="index.html#keepsakes">記念品</a>
-      <a href="index.html#faq">よくあるご質問</a>
+      <a href="faq.html">よくあるご質問</a>
       <a class="nav-cta" href="memory.html">掲載する（無料）</a>
     </nav>
     <button class="burger" id="burger" aria-label="メニュー" aria-expanded="false">
@@ -238,7 +238,7 @@
           ページができあがったら、ご入力のメールアドレスに URL をお送りします。<br>
           おおむね3日以内にお届けします。
         </p>
-        <p class="done-s" style="margin-top:22px;font-size:11.5px;opacity:.72">
+        <p class="done-s" style="margin-top:22px;font-size:13px;opacity:.8">
           できあがるページは、このようなものです。
         </p>
         <div class="done-actions">
@@ -269,46 +269,64 @@
 <footer class="ftr">
   <div class="wrap">
     <div class="ftr-top">
-      <div>
+
+      <div class="ftr-brand">
         <div class="ftr-mark">
           <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <circle cx="16" cy="16" r="11.2" stroke="#CFC9BE" stroke-width=".8" opacity=".5"/>
+            <circle cx="16" cy="16" r="11.2" stroke="#C0A874" stroke-width=".8" opacity=".65"/>
             <path d="M16 9.4l1.7 4.9 4.9 1.7-4.9 1.7-1.7 4.9-1.7-4.9-4.9-1.7 4.9-1.7z"
-                  fill="#E8D9B4" opacity=".85"/>
+                  fill="#E8D9B4" opacity=".95"/>
           </svg>
           <span>
             <span class="jp">うちの子の星</span>
             <span class="en">KOMOREBI ATELIER</span>
           </span>
         </div>
-        <p>犬と猫のための、思い出の記録と記念品の制作。<br>火葬・埋葬・供養・納骨は行っておりません。</p>
+        <p>犬と猫のための、思い出の記録と記念品の制作。<br>
+        火葬・埋葬・供養・納骨は行っておりません。</p>
       </div>
-      <div class="ftr-ln">
+
+      <nav class="ftr-ln" aria-label="コンテンツ">
         <h4>CONTENTS</h4>
         <a href="index.html#sky">その日の空</a>
         <a href="map.html">思い出マップ</a>
         <a href="index.html#keepsakes">記念品</a>
-        <a href="index.html#faq">よくあるご質問</a>
+        <a href="faq.html">よくあるご質問</a>
         <a href="memory.html">掲載する（無料）</a>
-      </div>
-      <div class="ftr-ln">
+      </nav>
+
+      <nav class="ftr-ln" aria-label="ご案内">
         <h4>INFORMATION</h4>
         <a href="tokushoho.html">特定商取引法に基づく表記</a>
         <a href="privacy.html">プライバシーポリシー</a>
         <a href="terms.html">利用規約</a>
         <a href="ai-policy.html">AI利用に関する方針</a>
-      </div>
+      </nav>
+
     </div>
+
+    <div class="ftr-mid">
+      <p class="ftr-voice">
+        <span class="ftr-voice-lbl">ひとりで、ていねいに。</span>
+        うちの子の星は、ひとりで運営しています。<br>
+        お返事が遅れることもありますが、お写真もお名前も、<br class="sp-br">
+        ひとつずつていねいに扱います。
+      </p>
+    </div>
+
     <div class="ftr-disc">
-      <div>
-        <b>「その日の空」記念証について</b>
-        当該記念証は記念品です。星の命名権、国際天文学連合（IAU）が定める正式名称、
-        宇宙・天体・土地の所有権、その他いかなる法的効力も伴いません。
-      </div>
-      <div>
-        <b>思い出マップについて</b>
-        想い出を記録するためのものであり、墓地・納骨堂・霊園ではありません。
-        区画の販売および永続的な保管を約束するものではありません。
+      <h4 class="ftr-disc-h">法的なお取り扱いについて</h4>
+      <div class="ftr-disc-grid">
+        <div>
+          <b>「その日の空」記念証</b>
+          記念証は、記念品です。星の命名権、国際天文学連合（IAU）が定める正式名称、
+          天体や土地の所有権、その他いかなる法的効力も伴いません。
+        </div>
+        <div>
+          <b>思い出マップ</b>
+          想い出を記録するためのものです。お墓・納骨堂・霊園ではなく、
+          区画の販売および永続的な保管を約束するものでもありません。
+        </div>
       </div>
       <div class="ftr-cr">&copy; <span data-year>2026</span> KOMOREBI ATELIER</div>
     </div>
@@ -417,7 +435,7 @@
                          res.reason === 'similar' ? 'この写真は、登録済みの写真とほとんど同じです。' :
                          'この写真は、すでに登録されています。') + '</strong><br>' +
           res.detail +
-          '<br><span style="font-size:11px;opacity:.8">' +
+          '<br><span style="font-size:13px;opacity:.85">' +
           'ご家族で別々に登録したいなど、正当な理由がある場合はご連絡ください。</span>');
       }else{
         toStep2.disabled = false;
@@ -485,7 +503,7 @@
 
       url: location.href
     }, formMsg, submitBtn,
-      '登録しました。<br><span style="font-size:11px;opacity:.8">' +
+      '登録しました。<br><span style="font-size:13px;opacity:.85">' +
       'ページができあがったら、メールでURLをお送りします。</span>'
     ).then(function(ok){
       if (!ok) return;

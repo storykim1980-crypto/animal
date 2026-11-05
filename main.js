@@ -30,19 +30,105 @@
   var burger = document.getElementById('burger');
   var nav = document.getElementById('nav');
   if (burger && nav) {
-    burger.addEventListener('click', function () {
-      var open = nav.classList.toggle('open');
-      burger.classList.toggle('on', open);
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-    nav.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') {
-        nav.classList.remove('open');
-        burger.classList.remove('on');
-        document.body.style.overflow = '';
+    var scrollY = 0;
+    var lastFocus = null;
+    /* CSS のブレークポイント（860px）と同じ基準 */
+    var mq = window.matchMedia('(max-width:860px)');
+    function isMobileNav() { return mq.matches; }
+
+    /* iOS Safari は body{overflow:hidden} を無視するため、
+       位置を保存して body を fixed にする方式で固定する */
+    function lockScroll() {
+      scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      document.body.style.top = (-scrollY) + 'px';
+      document.body.classList.add('nav-lock');
+    }
+    function unlockScroll() {
+      document.body.classList.remove('nav-lock');
+      document.body.style.top = '';
+      /* html{scroll-behavior:smooth} が効いていると元の位置へ戻るのに
+         時間がかかり「止まった」ように見えるので、一時的に即ジャンプさせる */
+      var html = document.documentElement;
+      var prev = html.style.scrollBehavior;
+      html.style.scrollBehavior = 'auto';
+      try { window.scrollTo({ top: scrollY, left: 0, behavior: 'instant' }); }
+      catch (e) { window.scrollTo(0, scrollY); }
+      /* レイアウト復帰後のズレを next frame でもう一度そろえる */
+      requestAnimationFrame(function () { window.scrollTo(0, scrollY); });
+      setTimeout(function () { html.style.scrollBehavior = prev; }, 60);
+    }
+
+    function openNav() {
+      if (nav.classList.contains('open')) return;
+      lastFocus = document.activeElement;
+      lockScroll();
+      nav.classList.add('open');
+      burger.classList.add('on');
+      burger.setAttribute('aria-expanded', 'true');
+      if (isMobileNav()) nav.removeAttribute('aria-hidden');
+      /* 最初のリンクにフォーカスを移す（読み上げ・キーボード操作のため） */
+      var first = nav.querySelector('a');
+      if (first) { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } }
+    }
+
+    function closeNav(returnFocus) {
+      if (!nav.classList.contains('open')) return;
+      nav.classList.remove('open');
+      burger.classList.remove('on');
+      burger.setAttribute('aria-expanded', 'false');
+      if (isMobileNav()) nav.setAttribute('aria-hidden', 'true');
+      unlockScroll();
+      if (returnFocus !== false) {
+        try { (lastFocus || burger).focus({ preventScroll: true }); }
+        catch (e) { /* 古いブラウザは無視 */ }
       }
+      lastFocus = null;
+    }
+
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (nav.classList.contains('open')) closeNav(); else openNav();
     });
+
+    /* リンクを押したら閉じる（#anchor でも通常通り遷移させる） */
+    nav.addEventListener('click', function (e) {
+      if (e.target.closest('a')) closeNav(false);
+    });
+
+    /* 背景（ナビの何もない部分）をタップしたら閉じる —— 以前は何も起きず固まって見えた */
+    nav.addEventListener('click', function (e) {
+      if (e.target === nav) closeNav();
+    });
+
+    /* ESC キーで閉じる */
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') closeNav();
+    });
+
+    /* タブでメニュー外に出ないようにする（フォーカストラップ） */
+    nav.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var f = nav.querySelectorAll('a, button');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    /* 画面を横に広げてメニューが不要になったら閉じる */
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 860 && nav.classList.contains('open')) closeNav(false);
+    });
+
+    /* 初期状態：モバイルのときだけ「閉じている」ことを支援技術へ伝える。
+       デスクトップでは nav は常に見えているので aria-hidden を付けてはいけない。 */
+    if (isMobileNav()) nav.setAttribute('aria-hidden', 'true');
+    mq.addEventListener ? mq.addEventListener('change', onMq)
+                        : mq.addListener && mq.addListener(onMq);
+    function onMq(e) {
+      if (e.matches) { if (!nav.classList.contains('open')) nav.setAttribute('aria-hidden', 'true'); }
+      else nav.removeAttribute('aria-hidden');
+    }
   }
 
   /* -------------------------------------------------------------------
@@ -329,7 +415,7 @@
       g.push('<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) +
         '" r="1.5" fill="#A8894F" fill-opacity=".85"/>');
       g.push('<text x="' + (x + 7).toFixed(1) + '" y="' + (y + 3).toFixed(1) +
-        '" font-size="7.5" letter-spacing="1.4" fill="#4A453C" fill-opacity=".7" ' +
+        '" font-size="9.5" letter-spacing="1" fill="#4A453C" fill-opacity=".8" ' +
         'font-family="serif">' + p.name + '</text>');
     });
 
@@ -464,8 +550,8 @@
         '" height="' + INSET.h + '" fill="none" stroke="' + INK_EDGE +
         '" stroke-width=".7" stroke-dasharray="3 3" opacity=".7"/>');
       g.push('<text x="' + (INSET.x + 6) + '" y="' + (INSET.y + 11) +
-        '" font-size="6" letter-spacing="1.6" fill="' + INK_EDGE +
-        '" fill-opacity=".7" font-family="serif">冲縄</text>');
+        '" font-size="14" letter-spacing=".8" fill="' + INK_EDGE +
+        '" fill-opacity=".8" font-family="serif">冲縄</text>');
 
       if (prInset) {
         var insetPath = pathOf(INSET_KEYS, prInset);
@@ -494,7 +580,7 @@
         if (!pr) return;
         g.push('<text x="' + (pr.x(L[1]) + L[4]).toFixed(1) +
           '" y="' + (pr.y(L[2]) + L[5]).toFixed(1) +
-          '" font-size="6.8" letter-spacing=".9" fill="#F2E7CE" fill-opacity=".74" ' +
+          '" font-size="15" letter-spacing=".4" fill="#F2E7CE" fill-opacity=".88" ' +
           'text-anchor="' + L[3] + '" font-family="serif">' + L[0] + '</text>');
       });
 
@@ -502,16 +588,16 @@
       g.push('<g opacity=".42" transform="translate(' + (VW - 22) + ',24)">' +
         '<circle r="9" fill="none" stroke="' + GOLD + '" stroke-width=".55"/>' +
         '<path d="M0,-11.5 l2.8,8 -2.8,-2 -2.8,2 z" fill="' + GOLD + '"/>' +
-        '<text y="20" font-size="6" fill="' + GOLD + '" text-anchor="middle" ' +
-        'letter-spacing="1">N</text></g>');
+        '<text y="21" font-size="14" fill="' + GOLD + '" text-anchor="middle" ' +
+        'letter-spacing=".8">N</text></g>');
 
       /* ===== 縮尺バー（雰囲気） ===== */
       g.push('<g opacity=".4" transform="translate(' + (VW - 76) + ',' + (VH - 14) + ')">' +
         '<line x1="0" y1="0" x2="52" y2="0" stroke="' + GOLD + '" stroke-width=".7"/>' +
         '<line x1="0" y1="-3" x2="0" y2="3" stroke="' + GOLD + '" stroke-width=".7"/>' +
         '<line x1="52" y1="-3" x2="52" y2="3" stroke="' + GOLD + '" stroke-width=".7"/>' +
-        '<text x="26" y="-5" font-size="5.6" fill="' + GOLD + '" text-anchor="middle" ' +
-        'letter-spacing=".8">1,000 km</text></g>');
+        '<text x="26" y="-6" font-size="11" fill="' + GOLD + '" text-anchor="middle" ' +
+        'letter-spacing=".6">1,000 km</text></g>');
 
       host.innerHTML = '<svg viewBox="0 0 ' + VW + ' ' + VH + '" xmlns="http://www.w3.org/2000/svg" ' +
         'style="width:100%;height:auto" role="img" aria-label="日本地図">' + g.join('') + '</svg>';
