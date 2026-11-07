@@ -2486,3 +2486,104 @@ html{scroll-behavior:smooth}
   ::-webkit-scrollbar-thumb:hover{background:rgba(156,124,70,.55)}
 }
 html{scrollbar-color:rgba(156,124,70,.34) var(--paper);scrollbar-width:thin}
+
+/* ══════════════════════════════════════════════════════════════
+   TYPOGRAPHY CORRECTION — 本文はゴシック、見出しは明朝
+   （明朝の本文は画面では重く潰れるため、可読性を優先）
+   ══════════════════════════════════════════════════════════════ */
+.body,.small,.tiny{
+  font-family:var(--gothic);
+  font-weight:400;
+  letter-spacing:.04em;
+  line-height:1.95;
+}
+/* リード文・引用・大きな見出しは明朝のまま（品格を出す） */
+.lead,.statement-tx,.quote-tx,.cine-cap .q{
+  font-family:var(--mincho);
+}
+
+/* ── 英数字だけの要素は詰め組みを解除（palt は和文専用）── */
+.en,.lbl,.eyebrow,.edit-num,.cert-no,.cert-brand,.ftr-cr,
+.hero3-eyebrow,.kanji-num,.step-num,.price-val,.stats4 b{
+  font-feature-settings:normal;
+}
+
+/* ── 見出しのウェイトを最適化（太すぎず細すぎず）── */
+.display{font-weight:500}
+.h2,.sec-head .h2{font-weight:500}
+.h3{font-weight:500}
+.statement-tx{font-weight:400}
+.lead{font-weight:400}
+
+/* ── 日本語の約物（、。）の直後をわずかに詰める ── */
+.lead,.statement-tx,.quote-tx,.body{
+  hanging-punctuation:allow-end;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   palt と letter-spacing の競合を解消
+   （広い追送りをかける要素では詰め組みを無効化するのが日本語組版の原則）
+   ══════════════════════════════════════════════════════════════ */
+
+/* ① 広い追送り（表示目的）→ 詰め組み OFF・等幅で均一に */
+.cert-name,.cert-ttl,.cert-brand,.cert-no,.jp,.mark-tx .jp,
+.hero3-eyebrow,.lbl,.en,.edit-num,.kanji-num,.step-num,
+.quote-by,.cine-cap .s,.ftr-cr,.more-fold-tx,.cmp-fold-tx{
+  font-feature-settings:normal;
+}
+
+/* ② 詰め組みを使う本文・見出し → 追送りは最小限に */
+.display{letter-spacing:.02em}
+.h2,.sec-head .h2{letter-spacing:.025em}
+.h3{letter-spacing:.022em}
+.lead{letter-spacing:.028em}
+.body,.small,.tiny{letter-spacing:.022em}
+.statement-tx{letter-spacing:.035em}
+
+/* ③ ロゴ・証明書は詰め組み無しで字間を均一に（上質さの要） */
+.mark-tx .jp{letter-spacing:.14em}
+.cert-name{letter-spacing:.18em}
+.cert-ttl{letter-spacing:.2em}
+.cert-brand{letter-spacing:.24em}
+
+/* ── レンダリング品質 ── */
+body{
+  text-rendering:auto;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-synthesis:none;
+  font-optical-sizing:auto;
+}
+
+/* ── 合成ウェイト不具合の是正（700 が効かなくなっていた）── */
+body{font-synthesis:weight style small-caps}
+
+/* ══════════════════════════════════════════════════════════════
+   FINAL TYPOGRAPHY — Shippori Mincho（画面設計の現代明朝）
+   Zen Old Mincho は字面が重く画面で潰れるため変更。
+   本文はゴシックのまま可読性を確保し、サイズを引き上げ。
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --mincho:"Shippori Mincho","Hiragino Mincho ProN","Hiragino Mincho Pro",
+           "Yu Mincho",YuMincho,"Noto Serif JP",serif;
+  --gothic:"Zen Kaku Gothic New","Hiragino Sans","Hiragino Kaku Gothic ProN",
+           "Yu Gothic",YuGothic,"Noto Sans JP",sans-serif;
+}
+
+/* ── サイズを一段階引き上げ（日本語は大きめが読みやすい）── */
+.body{font-size:18px;line-height:2.0;letter-spacing:.025em}
+.small{font-size:17px;line-height:1.95}
+.tiny{font-size:15.5px;line-height:1.9}
+.lead{font-size:18.5px;line-height:2.05;letter-spacing:.03em}
+.h3{font-size:clamp(19px,2.2vw,24px);line-height:1.88}
+.h2,.sec-head .h2{font-size:clamp(24px,3.2vw,38px);line-height:1.84}
+.display{font-size:clamp(32px,5.6vw,64px)}
+
+/* 本文はゴシック（可読性）、見出し・リードは明朝（品格） */
+.body,.small,.tiny{font-family:var(--gothic);font-weight:400}
+.lead,.statement-tx,.quote-tx,.display,.h2,.h3,.h1{font-family:var(--mincho)}
+
+/* 追送りは控えめに（詰め組みは日本語Google Fontsに存在しないため不要） */
+.body,.small,.tiny{letter-spacing:.025em}
+.lead{letter-spacing:.03em}
+.h2,.sec-head .h2,.h3{letter-spacing:.028em}

@@ -1,0 +1,10 @@
+# ご家族の個人情報が入るため、登録データは公開しない
+site/entries/
+entries/
+*.orig.jpg
+
+# OS / エディタ
+.DS_Store
+Thumbs.db
+site/certs/
+certs/
